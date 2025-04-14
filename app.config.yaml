@@ -1,0 +1,28 @@
+application:
+  actions: actions
+  web: web-src
+  runtimeManifest:
+    packages:
+      appbuilder:
+        license: Apache-2.0
+        actions:
+          api-sample:
+            function: actions/api-sample/index.ts
+            web: 'yes'
+            runtime: nodejs:22
+            inputs:
+              LOG_LEVEL: debug
+              BASE_URL: $BASE_URL
+            annotations:
+              require-adobe-auth: true
+              final: true
+          publish-event-sample:
+            function: actions/publish-event-sample/index.ts
+            web: 'yes'
+            runtime: nodejs:22
+            inputs:
+              LOG_LEVEL: debug
+              apiKey: $SERVICE_API_KEY
+            annotations:
+              require-adobe-auth: true
+              final: true

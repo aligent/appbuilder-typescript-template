@@ -1,0 +1,9 @@
+# NodeJS packages
+node_modules
+
+# AppBuilder/aio CLI outputs
+dist
+.parcel-cache
+.env
+.aio
+.aws.tmp*

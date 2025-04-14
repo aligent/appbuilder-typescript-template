@@ -1,0 +1,3 @@
+{
+    "extends": "@aligent/ts-code-standards/tsconfigs-react"
+}

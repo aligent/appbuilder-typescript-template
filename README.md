@@ -99,3 +99,11 @@ This setup is brittle and confusing in a few areas. Some of that is because of t
 - `aio app run` uses Parcel with an internal Babel config and warns about the Babel config file, so it has been renamed and pointed to with the `transform` config in `jest.config.js`
 - Jest doesn't understand `.js` imports in Typescript files, requiring `moduleNameMapper` configuration in `jest.config.js`
 - `babel-jest` hoists mock declarations to the top of the files which can make it very tricky to mock nested functions from `@adobe/aio-sdk`; the `jest` import is not available at the time mocks are initialised
+
+## Under development
+
+- [ ] Deployment pipeline
+- [ ] Pre-commit hooks
+- [ ] Front End calling deployed actions
+- [ ] Front End extension point example
+- [ ] Cleaner tsconfig setup separating tests, actions, web code

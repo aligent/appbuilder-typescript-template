@@ -88,6 +88,11 @@ application:
 - **do not commit to source control**
 - Documentation: https://developer.adobe.com/app-builder/docs/guides/configuration/#aio
 
+### `*webpack-config.js`
+
+- Used by `aio cli` for bundling typescript code
+- Adds inline source maps to support runtime debugging breakpoints in Typescript files
+
 ## General pain points in this repository
 
 This setup is brittle and confusing in a few areas. Some of that is because of the aio CLI's opinionated behaviour, some may be because the Typescript and package settings aren't quite right.

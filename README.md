@@ -71,9 +71,12 @@ application:
 
 ### `.env`
 
+> [!CAUTION]
+>
+> - Do not commit to source control
+
 - Generated with `aio app use`
 - Makes secrets and environment variables available at build time
-- **do not commit to source control**
 - Documentation: https://developer.adobe.com/app-builder/docs/guides/configuration/#env
 
 ```bash
@@ -85,10 +88,13 @@ application:
 
 ### `.aio`
 
-- Generated with `aio app use`
+> [!CAUTION]
+>
+> - Do not edit manually
+> - Do not commit to source control
+
+- Generated with `aio app use` or the `Download All` button in an Adobe Developer Console workspace
 - Configuration for Developer Console
-- **do not edit manually**
-- **do not commit to source control**
 - Documentation: https://developer.adobe.com/app-builder/docs/guides/configuration/#aio
 
 ### `*webpack-config.js`

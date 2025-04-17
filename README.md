@@ -24,13 +24,17 @@ Add the BASE_URL environment variable required for the api-sample action to your
 BASE_URL=https://pokeapi.co/api/v2/pokemon/
 ```
 
-## Local Development
+## Development
+
+Use the `aio cli` for development commands. A comprehensive list of commands and options can be found on github : https://github.com/adobe/aio-cli
+
+### Serving the app locally
 
 - `aio app dev` will serve **both** actions and frontend locally
 - `aio app run` will **deploy** actions to the AppBuilder platform and serve the frontend locally
 - The local server is exposed on `localhost:9080` by default
 
-## Debugging in VS Code
+### Debugging in VS Code
 
 Open the VSCode Debugging Panel (`CTRL-Shift-D`) and run either of the pre-defined AppBuilder launch schemas.
 
@@ -38,12 +42,11 @@ Alternatively, create a new Javascript Debug Terminal and run `aio app dev`/`aio
 
 Breakpoints in typescript code are supported with inline source maps.
 
-## Test & Coverage
+### Test & Coverage
 
-- Run `aio app test` to run unit tests for ui and actions
-- Run `aio app test --e2e` to run e2e tests
+- Run `aio app test` to run the testing suite
 
-## Deploy & Cleanup
+### Deploy & Cleanup
 
 - `aio app deploy` to build and deploy all actions on Runtime and static files to CDN
 - `aio app undeploy` to undeploy the app
@@ -68,9 +71,12 @@ application:
 
 ### `.env`
 
+> [!CAUTION]
+>
+> - Do not commit to source control
+
 - Generated with `aio app use`
 - Makes secrets and environment variables available at build time
-- **do not commit to source control**
 - Documentation: https://developer.adobe.com/app-builder/docs/guides/configuration/#env
 
 ```bash
@@ -82,11 +88,19 @@ application:
 
 ### `.aio`
 
-- Generated with `aio app use`
+> [!CAUTION]
+>
+> - Do not edit manually
+> - Do not commit to source control
+
+- Generated with `aio app use` or the `Download All` button in an Adobe Developer Console workspace
 - Configuration for Developer Console
-- **do not edit manually**
-- **do not commit to source control**
 - Documentation: https://developer.adobe.com/app-builder/docs/guides/configuration/#aio
+
+### `*webpack-config.js`
+
+- Used by `aio cli` for bundling typescript code
+- Adds inline source maps to support runtime debugging breakpoints in Typescript files
 
 ## General pain points in this repository
 

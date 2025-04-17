@@ -28,17 +28,9 @@
     "typescript": "^5.8.3"
   },
   "scripts": {
-    "test": "jest ./tests/unit",
-    "test:watch": "jest --watch ./tests/unit",
-    "e2e": "jest --collectCoverage=false --testRegex ./e2e",
-    "lint": "eslint --ignore-pattern web-src --no-error-on-unmatched-pattern test src actions",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "lint:all": "eslint",
-    "check-types": "tsc --noEmit",
-    "clean": "rm -rf lib",
-    "compile": "tsc",
-    "build": "npm run clean && npm run compile && aio app build",
-    "deploy": "npm run build && aio app deploy"
+    "check-types": "tsc --noEmit"
   },
   "engines": {
     "node": ">=18"

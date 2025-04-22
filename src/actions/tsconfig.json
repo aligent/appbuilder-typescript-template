@@ -1,0 +1,9 @@
+{
+    "extends": "@aligent/ts-code-standards/tsconfigs-base",
+    "compileOnSave": false,
+    "compilerOptions": {
+        "sourceMap": true
+    },
+    "include": ["**/*.ts", "../../global-types"],
+    "exclude": []
+}

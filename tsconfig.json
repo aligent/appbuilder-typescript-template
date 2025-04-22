@@ -1,10 +1,6 @@
 {
     "extends": "@aligent/ts-code-standards/tsconfigs-base",
     "compileOnSave": false,
-    "compilerOptions": {
-        "sourceMap": true,
-        "noEmit": false
-    },
-    "exclude": ["tests", "**/*.mjs", "node_modules"],
-    "include": ["./actions", "./types"]
+    "exclude": ["tests", "**/*.mjs", "**/*.cjs", "node_modules"],
+    "include": ["global-types"]
 }

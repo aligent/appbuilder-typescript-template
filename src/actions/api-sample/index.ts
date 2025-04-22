@@ -11,9 +11,9 @@
 
 import { Core } from '@adobe/aio-sdk';
 
-import { STATUS_CODES } from '../http.js';
-import { RequestParameters } from '../runtime.js';
-import { checkMissingRequestInputs, errorResponse, stringParameters } from '../utils.js';
+import { STATUS_CODES } from '../utils/http.js';
+import { RequestParameters } from '../utils/runtime.js';
+import { checkMissingRequestInputs, errorResponse, stringParameters } from '../utils/utils.js';
 
 type Params = RequestParameters & {
     LOG_LEVEL?: string;

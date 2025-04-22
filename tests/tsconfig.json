@@ -1,0 +1,9 @@
+{
+    "extends": "@aligent/ts-code-standards/tsconfigs-base",
+    "compilerOptions": {
+        "noEmit": true,
+        "allowImportingTsExtensions": true
+    },
+    "include": ["**/*.test.ts", "../src/actions/**/*.ts", "../global-types"],
+    "exclude": []
+}

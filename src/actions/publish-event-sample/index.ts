@@ -12,14 +12,14 @@
 import { Core, Events } from '@adobe/aio-sdk';
 import { CloudEvent } from 'cloudevents';
 import { v4 as uuid } from 'uuid';
-import { STATUS_CODES, StatusCode } from '../http.js';
-import { RequestParameters } from '../runtime.js';
+import { STATUS_CODES, StatusCode } from '../utils/http.js';
+import { RequestParameters } from '../utils/runtime.js';
 import {
     checkMissingRequestInputs,
     errorResponse,
     getBearerToken as extractBearerToken,
     stringParameters,
-} from '../utils.js';
+} from '../utils/utils.js';
 
 type Params = RequestParameters & {
     LOG_LEVEL?: string;

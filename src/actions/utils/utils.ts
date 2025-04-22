@@ -99,7 +99,7 @@ export function checkMissingRequestInputs<
     const P extends Array<Paths<T> | Paths<T>>,
     const H extends Array<Paths<T> | Paths<T['__ow_headers']>>,
 >(params: T, requiredParams: P, requiredHeaders: H) {
-    let errorMessage = null;
+    let errorMessage: string | null = null;
 
     // check for missing headers, including those added by OpenWhisk
     const missingHeaders = getMissingKeys({ ...params.__ow_headers }, requiredHeaders);

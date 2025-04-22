@@ -1,0 +1,5 @@
+{
+    "extends": "@aligent/ts-code-standards/tsconfigs-react",
+    "include": ["**/*.tsx", "**/*.ts"],
+    "exclude": []
+}

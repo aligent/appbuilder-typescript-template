@@ -3,6 +3,6 @@ module.exports = {
         '^(\\.{1,2}/.*)\\.js$': '$1',
     },
     transform: {
-        '\\.ts$': ['babel-jest', { configFile: './babel.config.test.js' }],
+        '\\.ts$': ['babel-jest', { configFile: './jest.babel.config.js' }],
     },
 };

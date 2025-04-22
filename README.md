@@ -1,7 +1,7 @@
 # Aligent Typescript Template for Adobe AppBuilder
 
 This repository contains a ready-to-build application including two actions and a simple frontend.
-Frontend and action code is fully typed and bundled with sourcemaps using `ts-loader`.
+Frontend and action code is fully typed, actions are bundled with sourcemaps using `ts-loader` for step-through debugging.
 
 # Setup
 
@@ -108,10 +108,10 @@ This setup is brittle and confusing in a few areas. Some of that is because of t
 
 - AppBuilder doesn't support ESM syntax for `*webpack-config.js`, so the whole package has to be commonjs. For consistency only the standard aligent config files (prettier, eslint) are kept as `.mjs`
 - The `ts-loader` plugin for webpack and `"noEmit": false` in tsconfig.json are required for bundling typescript code
-- `"noEmit": false` means `"allowImportingTsExtensions": true` can't be set, so code must import files using `.js` or `.jsx` extensions
+- `"noEmit": false` means `"allowImportingTsExtensions": true` can't be set, so **action** code must import files using `.js` or `.jsx` extensions
 - `aio app test` only works with Jest, requiring a Babel configuration to use `@babel/preset-typescript`
 - `aio app run` uses Parcel with an internal Babel config and warns about the Babel config file, so it has been renamed and pointed to with the `transform` config in `jest.config.js`
-- Jest doesn't understand `.js` imports in Typescript files, requiring `moduleNameMapper` configuration in `jest.config.js`
+- Jest doesn't understand the transpiled `.js` imports, requiring `moduleNameMapper` configuration in `jest.config.js`
 - `babel-jest` hoists mock declarations to the top of the files which can make it very tricky to mock nested functions from `@adobe/aio-sdk`; the `jest` import is not available at the time mocks are initialised
 
 ## Under development
@@ -120,4 +120,5 @@ This setup is brittle and confusing in a few areas. Some of that is because of t
 - [ ] Pre-commit hooks
 - [ ] Front End calling deployed actions
 - [ ] Front End extension point example
-- [ ] Cleaner tsconfig setup separating tests, actions, web code
+- [x] Cleaner tsconfig setup separating tests, actions, web code
+- [ ] See if it's better to use Babel instead of ts-loader for action compiling

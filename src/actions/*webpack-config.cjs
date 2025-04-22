@@ -4,19 +4,19 @@
 
 module.exports = {
     devtool: 'inline-source-map',
+    resolve: {
+        extensions: ['.ts'],
+        extensionAlias: {
+            '.js': ['.ts', '.js'],
+        },
+    },
     module: {
         rules: [
             {
                 // includes, excludes are in tsconfig.json
                 test: /\.ts?$/,
                 exclude: /node_modules/,
-                use: 'ts-loader',
-                resolve: {
-                    extensionAlias: {
-                        '.js': ['.ts', '.js'],
-                        '.jsx': ['.tsx', '.jsx'],
-                    },
-                },
+                loader: 'ts-loader',
             },
         ],
     },

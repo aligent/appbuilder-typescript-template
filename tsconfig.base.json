@@ -1,6 +1,10 @@
 {
     "extends": "@aligent/ts-code-standards/tsconfigs-base",
     "compileOnSave": false,
+    "compilerOptions": {
+        "noEmit": true,
+        "allowImportingTsExtensions": true
+    },
     "exclude": ["tests", "**/*.mjs", "**/*.cjs", "node_modules"],
     "include": ["global-types"]
 }

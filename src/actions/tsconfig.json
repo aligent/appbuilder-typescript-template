@@ -1,6 +1,5 @@
 {
-    "extends": "@aligent/ts-code-standards/tsconfigs-base",
-    "compileOnSave": false,
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "sourceMap": true
     },

@@ -1,4 +1,7 @@
 application:
+  hooks:
+    build-actions: ./hooks/check-action-types.js
+    build-static: ./hooks/check-web-types.js
   actions: src/actions
   web: src/web
   runtimeManifest:

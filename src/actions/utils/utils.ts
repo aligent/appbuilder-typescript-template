@@ -1,7 +1,7 @@
 /* This file exposes some common utilities for your actions */
 
 import type { Paths, SetRequiredDeep, SimplifyDeep, UnionToIntersection } from 'type-fest';
-import { RequestParameters } from './runtime.js';
+import { RequestParameters } from './runtime.ts';
 
 /**
  *

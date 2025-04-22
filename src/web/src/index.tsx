@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import App from './components/App.jsx';
+import App from './components/App.tsx';
 import './index.css';
 
 // Render the application and provide it with the runtime and ims details

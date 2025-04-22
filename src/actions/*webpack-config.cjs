@@ -13,11 +13,21 @@ module.exports = {
     module: {
         rules: [
             {
-                // includes, excludes are in tsconfig.json
-                test: /\.ts?$/,
+                // Test for .ts (and potentially .tsx if needed)
+                test: /\.ts$/, // Adjust if you use .tsx: /\.tsx?$/
                 exclude: /node_modules/,
-                loader: 'ts-loader',
+                // Use babel-loader instead of ts-loader
+                loader: 'babel-loader',
+                // Babel options are typically read from babel.config.js,
+                // but can be specified here if needed:
+                // options: { presets: [...] }
             },
+            // {
+            //     // includes, excludes are in tsconfig.json
+            //     test: /\.ts?$/,
+            //     exclude: /node_modules/,
+            //     loader: 'ts-loader',
+            // },
         ],
     },
 };

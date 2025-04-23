@@ -1,5 +1,5 @@
 // Webpack configuration required to compile typescript action and web source code
-// using the Adobe aio CLI. Adapted from https://github.com/adobe/aio-cli-plugin-app-dev
+// using the Adobe aio CLI. Adapted from https://github.com/adobe/aio-cli-plugin-app-dev, then switched to babel-loader
 // Appbuilder documentation: https://developer.adobe.com/app-builder/docs/guides/configuration/webpack-configuration/
 
 module.exports = {
@@ -13,21 +13,11 @@ module.exports = {
     module: {
         rules: [
             {
-                // Test for .ts (and potentially .tsx if needed)
-                test: /\.ts$/, // Adjust if you use .tsx: /\.tsx?$/
+                // Test for .ts - in theory actions should never use .tsx
+                test: /\.ts$/,
                 exclude: /node_modules/,
-                // Use babel-loader instead of ts-loader
                 loader: 'babel-loader',
-                // Babel options are typically read from babel.config.js,
-                // but can be specified here if needed:
-                // options: { presets: [...] }
             },
-            // {
-            //     // includes, excludes are in tsconfig.json
-            //     test: /\.ts?$/,
-            //     exclude: /node_modules/,
-            //     loader: 'ts-loader',
-            // },
         ],
     },
 };

@@ -48,13 +48,11 @@ export async function main(params: Readonly<Params>) {
             return errorResponse(STATUS_CODES.BadRequest, error, logger);
         }
 
-        // extract the user Bearer token from the Authorization header
+        // initialise the cloud events client with provided auth and org details
         const token = extractBearerToken(data);
         if (!token) {
             return errorResponse(401, 'missing Authorization header', logger);
         }
-
-        // We're confident we have an orgId because we checked for it in checkMissingRequestInputs
         const orgId = data.__ow_headers['x-gw-ims-org-id'];
         const eventsClient = await Events.init(orgId, data.apiKey, token);
 

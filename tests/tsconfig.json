@@ -1,0 +1,5 @@
+{
+    "extends": "../tsconfig.base.json",
+    "include": ["**/*.test.ts", "../global-types"],
+    "exclude": []
+}

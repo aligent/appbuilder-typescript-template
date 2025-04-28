@@ -1,10 +1,3 @@
 {
-    "extends": "@aligent/ts-code-standards/tsconfigs-base",
-    "compileOnSave": false,
-    "compilerOptions": {
-        "sourceMap": true,
-        "noEmit": false
-    },
-    "exclude": ["tests", "**/*.mjs", "node_modules"],
-    "include": ["./actions", "./types"]
+    "extends": "./tsconfig.base.json"
 }

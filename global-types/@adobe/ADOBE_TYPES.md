@@ -6,4 +6,5 @@ This folder declares a minimal module for the sdk.
 ## Currently supported
 
 - Core.Logger (from @adobe/aio-lib-core-logging)
+- Core.Config (from @adobe/aio-lib-core-config)
 - Events (from @adobe/aio-lib-events)

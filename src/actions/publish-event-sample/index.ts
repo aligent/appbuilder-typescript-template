@@ -12,14 +12,14 @@
 import { Core, Events } from '@adobe/aio-sdk';
 import { CloudEvent } from 'cloudevents';
 import { v4 as uuid } from 'uuid';
-import { STATUS_CODES, StatusCode } from '../http.js';
-import { RequestParameters } from '../runtime.js';
+import { STATUS_CODES, StatusCode } from '../utils/http.ts';
+import { RequestParameters } from '../utils/runtime.ts';
 import {
     checkMissingRequestInputs,
     errorResponse,
     getBearerToken as extractBearerToken,
     stringParameters,
-} from '../utils.js';
+} from '../utils/utils.ts';
 
 type Params = RequestParameters & {
     LOG_LEVEL?: string;
@@ -48,13 +48,11 @@ export async function main(params: Readonly<Params>) {
             return errorResponse(STATUS_CODES.BadRequest, error, logger);
         }
 
-        // extract the user Bearer token from the Authorization header
+        // initialise the cloud events client with provided auth and org details
         const token = extractBearerToken(data);
         if (!token) {
             return errorResponse(401, 'missing Authorization header', logger);
         }
-
-        // We're confident we have an orgId because we checked for it in checkMissingRequestInputs
         const orgId = data.__ow_headers['x-gw-ims-org-id'];
         const eventsClient = await Events.init(orgId, data.apiKey, token);
 

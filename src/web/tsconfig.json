@@ -1,0 +1,8 @@
+{
+    "extends": "@aligent/ts-code-standards/tsconfigs-react",
+    "compilerOptions": {
+        "allowImportingTsExtensions": true
+    },
+    "include": ["**/*.tsx", "**/*.ts"],
+    "exclude": []
+}

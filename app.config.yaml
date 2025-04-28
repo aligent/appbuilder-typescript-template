@@ -1,13 +1,16 @@
 application:
-  actions: actions
-  web: web-src
+  hooks:
+    build-actions: ./hooks/check-action-types.js
+    build-static: ./hooks/check-web-types.js
+  actions: src/actions
+  web: src/web
   runtimeManifest:
     packages:
       appbuilder:
         license: Apache-2.0
         actions:
           api-sample:
-            function: actions/api-sample/index.ts
+            function: src/actions/api-sample/index.ts
             web: 'yes'
             runtime: nodejs:22
             inputs:
@@ -17,7 +20,7 @@ application:
               require-adobe-auth: true
               final: true
           publish-event-sample:
-            function: actions/publish-event-sample/index.ts
+            function: src/actions/publish-event-sample/index.ts
             web: 'yes'
             runtime: nodejs:22
             inputs:

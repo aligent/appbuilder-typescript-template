@@ -1,7 +1,7 @@
 import { defaultTheme, Grid, Provider, View } from '@adobe/react-spectrum';
-import { About } from './About.jsx';
-import { Home } from './Home.jsx';
-import SideBar from './SideBar.jsx';
+import { About } from './About.tsx';
+import { Home } from './Home.tsx';
+import SideBar from './SideBar.tsx';
 
 function App() {
     return (

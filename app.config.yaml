@@ -16,6 +16,17 @@ application:
             inputs:
               LOG_LEVEL: debug
               BASE_URL: $BASE_URL
+              EXECUTION_LOG_PATH: $EXECUTION_LOG_PATH
+            annotations:
+              require-adobe-auth: true
+              final: true
+          get-execution-log-url:
+            function: src/actions/get-execution-log-url/index.ts
+            web: 'yes'
+            runtime: nodejs:22
+            inputs:
+              LOG_LEVEL: debug
+              EXECUTION_LOG_PATH: $EXECUTION_LOG_PATH
             annotations:
               require-adobe-auth: true
               final: true

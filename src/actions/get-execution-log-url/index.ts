@@ -9,18 +9,16 @@
  *   - Make sure to validate these changes against your security requirements before deploying the action
  */
 
-import { Core, Files, State } from '@adobe/aio-sdk';
+import { Core, Files } from '@adobe/aio-sdk';
 
 import { STATUS_CODES } from '../utils/http.ts';
 import { RequestParameters } from '../utils/runtime.ts';
-import { appendTimestampedLog } from '../utils/system-log.ts';
+import { getLogURL } from '../utils/system-log.ts';
 import { checkMissingRequestInputs, errorResponse, stringParameters } from '../utils/utils.ts';
 
 type Params = RequestParameters & {
     LOG_LEVEL?: string;
     EXECUTION_LOG_PATH?: string;
-    BASE_URL?: string;
-    name?: string;
 };
 
 // Runtime actions MUST export an async main function
@@ -31,69 +29,20 @@ export async function main(params: Params) {
         logger.debug(stringParameters(params));
 
         // Validate the input parameters, fail without retrying if any are missing
-        const requiredParams = ['name', 'BASE_URL', 'EXECUTION_LOG_PATH'];
+        const requiredParams = ['EXECUTION_LOG_PATH'];
         const { success, data, error } = checkMissingRequestInputs(params, requiredParams, []);
         if (!success) {
             return errorResponse(STATUS_CODES.BadRequest, error, logger);
         }
 
-        const state = await State.init();
         const files = await Files.init();
+        const url = await getLogURL(files, `${data.EXECUTION_LOG_PATH}/execution_log.txt`);
 
-        const cached = await state.get(data.name).catch(() => {
-            logger.warn('Error getting cached data for ' + data.name);
-            return null;
-        });
-
-        if (cached) {
-            logger.info('Cached data: ' + cached.value);
-
-            const response = {
-                statusCode: STATUS_CODES.OK,
-                body: { ...JSON.parse(cached.value), cached: true },
-            };
-
-            await appendTimestampedLog(
-                files,
-                `${data.EXECUTION_LOG_PATH}/execution_log.txt`,
-                data.name,
-                response
-            );
-
-            return {
-                statusCode: STATUS_CODES.OK,
-                body: { ...JSON.parse(cached.value), cached: true },
-            };
-        }
-
-        // Fetch, parse and return the response from the external API
-        const apiEndpoint = data.BASE_URL + data.name;
-        const res = await fetch(apiEndpoint);
-        if (!res.ok) {
-            throw new Error('request to ' + apiEndpoint + ' failed with status code ' + res.status);
-        }
-        const { name, id, height, is_default } = (await res.json()) as {
-            name: string;
-            id: number;
-            height: number;
-            is_default: boolean;
-        };
-        const response = {
+        logger.info(`${url}: successful request`);
+        return {
             statusCode: STATUS_CODES.OK,
-            body: { name, id, height, is_default, cached: false },
+            body: { url },
         };
-
-        await state.put(name, JSON.stringify({ name, id, height, is_default }));
-
-        await appendTimestampedLog(
-            files,
-            `${data.EXECUTION_LOG_PATH}/execution_log.txt`,
-            data.name,
-            response
-        );
-
-        logger.info(`${response.statusCode}: successful request`);
-        return response;
     } catch (error) {
         if (typeof error === 'string' || (typeof error === 'object' && error !== null)) {
             logger.error(error);

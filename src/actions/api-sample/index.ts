@@ -9,7 +9,7 @@
  *   - Make sure to validate these changes against your security requirements before deploying the action
  */
 
-import { Core } from '@adobe/aio-sdk';
+import { Core, State } from '@adobe/aio-sdk';
 
 import { STATUS_CODES } from '../utils/http.ts';
 import { RequestParameters } from '../utils/runtime.ts';
@@ -24,7 +24,6 @@ type Params = RequestParameters & {
 // Runtime actions MUST export an async main function
 export async function main(params: Params) {
     const logger = Core.Logger('main', { level: params.LOG_LEVEL || 'info' });
-
     try {
         logger.info('Calling the main action');
         logger.debug(stringParameters(params));
@@ -36,17 +35,38 @@ export async function main(params: Params) {
             return errorResponse(STATUS_CODES.BadRequest, error, logger);
         }
 
+        const state = await State.init();
+        const cached = await state.get(data.name).catch(() => {
+            logger.warn('Error getting cached data for ' + data.name);
+            return null;
+        });
+
+        if (cached) {
+            logger.info('Cached data: ' + cached.value);
+            return {
+                statusCode: STATUS_CODES.OK,
+                body: { ...JSON.parse(cached.value), cached: true },
+            };
+        }
+
         // Fetch, parse and return the response from the external API
         const apiEndpoint = data.BASE_URL + data.name;
         const res = await fetch(apiEndpoint);
         if (!res.ok) {
             throw new Error('request to ' + apiEndpoint + ' failed with status code ' + res.status);
         }
-        const content = await res.json();
+        const { name, id, height, is_default } = (await res.json()) as {
+            name: string;
+            id: number;
+            height: number;
+            is_default: boolean;
+        };
         const response = {
             statusCode: STATUS_CODES.OK,
-            body: content,
+            body: { name, id, height, is_default, cached: false },
         };
+
+        await state.put(name, JSON.stringify({ name, id, height, is_default }));
 
         logger.info(`${response.statusCode}: successful request`);
         return response;

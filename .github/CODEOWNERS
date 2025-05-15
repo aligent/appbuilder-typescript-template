@@ -1,5 +1,5 @@
-# DevOps team owns the .github folder
-.github/ @aligent/devops
-
 # Microservices and Backend teams own everything else
 * @aligent/microservices @aligent/backends
+
+# DevOps team owns the .github folder
+.github/ @aligent/devops

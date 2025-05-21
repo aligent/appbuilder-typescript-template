@@ -5,10 +5,11 @@
   "type": "commonjs",
   "dependencies": {
     "@adobe/aio-sdk": "^6.0.0",
-    "@adobe/react-spectrum": "^3.40.1",
+    "@adobe/react-spectrum": "^3.41.0",
     "cloudevents": "^9.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router": "^7.6.0",
     "uuid": "^8.0.0"
   },
   "devDependencies": {

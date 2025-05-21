@@ -63,8 +63,7 @@ Breakpoints in typescript code are supported with inline source maps.
 ```yaml
 application:
   hooks:
-    build-actions: ./hooks/check-action-types.js
-    build-static: ./hooks/check-web-types.js
+    pre-app-build: ./hooks/check-action-types.sh && ./hooks/check-web-types.sh
   actions: actions
   web: web-src
   runtimeManifest:

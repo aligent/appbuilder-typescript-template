@@ -7,13 +7,9 @@ import './index.css';
 // runtime and ims details to the application, so it can't run deployed actions
 const root = createRoot(document.getElementById('root')!);
 
-/* **here you can mock the exc runtime and ims objects** */
-const mockRuntime = { on: () => {} };
-const mockIms = { token: 'mock-token', org: 'mock-org' };
-
 root.render(
     // HashRouter is used to support routing on manual page refresh
     <HashRouter>
-        <App runtime={mockRuntime} ims={mockIms} />
+        <App />
     </HashRouter>
 );

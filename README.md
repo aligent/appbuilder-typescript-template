@@ -121,7 +121,7 @@ This setup is brittle and confusing in a few areas. Some of that is because of t
 
 - [ ] Deployment pipeline
 - [ ] Pre-commit hooks
-- [ ] Front End calling deployed actions
+- [x] Front End calling deployed actions
 - [ ] Front End extension point example
 - [x] Cleaner tsconfig setup separating tests, actions, web code
 - [x] Use Babel instead of ts-loader for action compiling

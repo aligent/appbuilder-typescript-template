@@ -198,34 +198,3 @@ export class RuntimeManager {
         });
     }
 }
-
-export const mockRuntime = {
-    on: () => {},
-    configured: true,
-    lastConfigurationPayload: null,
-    off: () => {},
-    emit: () => {},
-} satisfies Runtime;
-
-export const mockIms = {
-    token: 'mock-token',
-    org: 'mock-org',
-    profile: {
-        account_type: 'mock-account-type',
-        authId: 'mock-auth-id',
-        avatar: 'mock-avatar',
-        avatarSrc: 'mock-avatar-src',
-        countryCode: 'mock-country-code',
-        displayName: 'mock-display-name',
-        email: 'mock-email',
-        emailVerified: true,
-        first_name: 'mock-first-name',
-        job_function: 'mock-job-function',
-        last_name: 'mock-last-name',
-        name: 'mock-name',
-        preferred_languages: ['mock-preferred-language'],
-        projectedProductContext: [],
-        session: 'mock-session',
-        userId: 'mock-user-id',
-    },
-} satisfies Ims;

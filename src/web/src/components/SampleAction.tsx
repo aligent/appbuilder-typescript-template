@@ -11,18 +11,21 @@ import {
 import Search from '@spectrum-icons/workflow/Search';
 import { useState } from 'react';
 import allActions from '../config.json';
+import { useAdobeRuntimeContext } from '../context/AdobeRuntimeContextProvider';
 import { useAppBuilderAction } from '../hooks/useAppBuilderAction';
 import { JsonTree } from './JsonTree';
-
-export const SampleAction = (props: { ims: { token: string; org: string } }) => {
+export const SampleAction = () => {
     // Set up react hook to invoke our appbuilder action
     const sampleActionUrl = allActions['appbuilder/api-sample'];
+
+    const { ims } = useAdobeRuntimeContext();
+
     const { response, loading, error, invoke } = useAppBuilderAction<{
         abilities: Array<{ ability: { name: string } }>;
     }>({
         url: sampleActionUrl,
         method: 'GET',
-        ims: props.ims,
+        ims,
     });
 
     // Keep track of the pokemon name input by the user

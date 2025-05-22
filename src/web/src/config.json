@@ -1,1 +1,4 @@
-{"api-sample":"https://801155-algamazonchanneltest-stage.adobeio-static.net/api/v1/web/appbuilder/api-sample","appbuilder/api-sample":"https://801155-algamazonchanneltest-stage.adobeio-static.net/api/v1/web/appbuilder/api-sample","publish-event-sample":"https://801155-algamazonchanneltest-stage.adobeio-static.net/api/v1/web/appbuilder/publish-event-sample","appbuilder/publish-event-sample":"https://801155-algamazonchanneltest-stage.adobeio-static.net/api/v1/web/appbuilder/publish-event-sample"}
+{
+  "appbuilder/api-sample": "https://localhost:9080/api/v1/web/appbuilder/api-sample",
+  "appbuilder/publish-event-sample": "https://localhost:9080/api/v1/web/appbuilder/publish-event-sample"
+}

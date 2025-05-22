@@ -63,6 +63,9 @@ const ArrayTreeViewItem = (props: { path: string; name: string; value: Json[] })
                         path={`${props.path}.${props.name}`}
                         name={index.toString()}
                         value={item}
+                        // Note that this may not be better than array index keys
+                        // as props.name is consistent across all items
+                        // - consider a different key if sorting or changing the array is required
                         key={`${props.name}-${index}`}
                     />
                 ))

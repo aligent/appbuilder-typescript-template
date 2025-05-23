@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
+import ActionRegistry from '../config.json';
 
 export interface UseAppBuilderActionOptions {
-    url: string;
+    name: keyof typeof ActionRegistry;
     method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
     searchParams?: Record<string, string>;
     body?: object;
@@ -15,7 +16,7 @@ export interface ActionPayload {
     headers?: Record<string, string>;
 }
 
-export function useAppBuilderAction<T>(options: UseAppBuilderActionOptions) {
+export function useAppBuilderAction<T = unknown>(options: UseAppBuilderActionOptions) {
     const [response, setResponse] = useState<T | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -37,7 +38,7 @@ export function useAppBuilderAction<T>(options: UseAppBuilderActionOptions) {
                     ...invokeOptions?.headers,
                 });
 
-                const url = new URL(options.url);
+                const url = new URL(ActionRegistry[options.name]);
                 const allSearchParams = { ...options.searchParams, ...invokeOptions?.searchParams };
                 for (const [k, v] of Object.entries(allSearchParams)) {
                     if (v != null) url.searchParams.set(k, v);

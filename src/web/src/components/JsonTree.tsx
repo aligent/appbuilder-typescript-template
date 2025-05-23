@@ -3,7 +3,7 @@ import Brackets from '@spectrum-icons/workflow/Brackets';
 import BracketsSquare from '@spectrum-icons/workflow/BracketsSquare';
 import { useCallback } from 'react';
 
-type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
+export type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
 
 /**
  * A component that displays a JSON object as a recursive tree view.

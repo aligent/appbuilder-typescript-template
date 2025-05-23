@@ -1,8 +1,6 @@
 import { init, type Runtime } from '@adobe/exc-app';
 import type { ImsProfile } from '@adobe/exc-app/ims/ImsProfile';
 import page from '@adobe/exc-app/page';
-import topbar from '@adobe/exc-app/topbar';
-import { isInIframe } from './isInIframe';
 
 /**
  * Adobe Identity Management Service properties
@@ -18,7 +16,7 @@ export interface Ims {
  *
  * @param title - The title of the application
  */
-export class RuntimeManager {
+export class RuntimeScript {
     private readonly CACHE_KEY = 'unifiedShellMRScript';
     private readonly HOT_RELOAD_KEY = 'EXC_US_HMR';
     private readonly ALLOWED_DOMAINS = [
@@ -28,18 +26,20 @@ export class RuntimeManager {
     private readonly EXTENSION = '.js';
     private readonly PROTOCOL = 'https:';
 
-    private readonly shortTitle: string;
     private url: string | null = null;
 
-    constructor(private readonly title: string = 'Adobe App Builder') {
-        if (!isInIframe()) {
-            throw new Error('Module Runtime: Needs to be within an iframe');
+    /**
+     * Check if the current window is an iframe
+     * The Adobe runtime should only be available within the Experience Cloud iframe
+     *
+     * @returns true if the current window is an iframe, false otherwise
+     */
+    public isInIframe() {
+        try {
+            return window.self !== window.top;
+        } catch {
+            return true;
         }
-
-        this.shortTitle =
-            this.title.split(' ').length >= 3
-                ? this.title.split(' ').slice(0, 5).join('').toUpperCase()
-                : this.title.slice(0, 5);
     }
 
     /**
@@ -120,7 +120,7 @@ export class RuntimeManager {
      *
      * @returns true if the url was loaded successfully, false otherwise
      */
-    public loadUrl() {
+    public getUrl() {
         const rawUrl = this.findUrl();
         if (!rawUrl) {
             console.warn('Module Runtime: No script URL found');
@@ -183,14 +183,6 @@ export class RuntimeManager {
                         org: imsOrg,
                         token: imsToken,
                     };
-
-                    topbar.solution = {
-                        icon: 'AdobeExperienceCloud',
-                        title: this.title,
-                        shortTitle: this.shortTitle,
-                    };
-
-                    page.title = this.title;
 
                     resolve({ runtime, ims });
                 });

@@ -1,7 +1,7 @@
 import { defaultTheme, Grid, Provider, View } from '@adobe/react-spectrum';
 import { Route, Routes, useNavigate } from 'react-router';
 import { AdobeRuntimeContextProvider } from '../context/AdobeRuntimeContextProvider.tsx';
-import { PageContextProvider } from '../context/PageContext.tsx';
+import { PageContextProvider } from '../context/PageContextProvider.tsx';
 import { Documentation } from './Documentation.tsx';
 import { Home } from './Home.tsx';
 import { SampleAction } from './SampleAction.tsx';
@@ -9,9 +9,10 @@ import SideBar from './SideBar.tsx';
 
 function App() {
     const navigate = useNavigate();
+
     return (
-        <PageContextProvider title="Aligent App Builder Typescript Template">
-            <AdobeRuntimeContextProvider>
+        <AdobeRuntimeContextProvider>
+            <PageContextProvider title="Aligent App Builder Typescript Template">
                 <Provider
                     theme={defaultTheme}
                     colorScheme={'light'}
@@ -38,8 +39,8 @@ function App() {
                         </View>
                     </Grid>
                 </Provider>
-            </AdobeRuntimeContextProvider>
-        </PageContextProvider>
+            </PageContextProvider>
+        </AdobeRuntimeContextProvider>
     );
 }
 

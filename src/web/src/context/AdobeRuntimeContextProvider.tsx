@@ -1,6 +1,6 @@
 import { Runtime } from '@adobe/exc-app';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { RuntimeManager, type Ims } from '../runtime/RuntimeManager';
+import { RuntimeScript, type Ims } from '../runtime/RuntimeScript';
 import { mockIms, mockRuntime } from '../runtime/runtimeMocks';
 
 const AdobeRuntimeContext = createContext<AdobeRuntimeContextType>({
@@ -30,9 +30,13 @@ export const AdobeRuntimeContextProvider = ({ children }: { children: React.Reac
     useEffect(() => {
         const load = async () => {
             try {
-                const runtimeScript = new RuntimeManager();
+                const runtimeScript = new RuntimeScript();
 
-                if (!runtimeScript.loadUrl()) {
+                if (!runtimeScript.isInIframe()) {
+                    throw new Error('Module Runtime: Only available within an iframe');
+                }
+
+                if (!runtimeScript.getUrl()) {
                     throw new Error('Module Runtime: Could not load valid Runtime Script url');
                 }
 
@@ -65,6 +69,11 @@ export const AdobeRuntimeContextProvider = ({ children }: { children: React.Reac
  * React hook to use the Adobe runtime and IMS context
  *
  * @returns {AdobeRuntimeContextType} - The Adobe runtime and IMS context
+ *
+ * @default loading - true
+ * @default error - null
+ * @default runtime - mockRuntime
+ * @default ims - mockIms
  */
 export const useAdobeRuntimeContext = () => {
     const context = useContext(AdobeRuntimeContext);

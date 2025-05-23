@@ -10,20 +10,14 @@ import {
 } from '@adobe/react-spectrum';
 import Search from '@spectrum-icons/workflow/Search';
 import { useState } from 'react';
-import allActions from '../config.json';
 import { useAdobeRuntimeContext } from '../context/AdobeRuntimeContextProvider';
 import { useAppBuilderAction } from '../hooks/useAppBuilderAction';
-import { JsonTree } from './JsonTree';
+import { JsonTree, type Json } from './JsonTree';
 export const SampleAction = () => {
     // Set up react hook to invoke our appbuilder action
-    const sampleActionUrl = allActions['appbuilder/api-sample'];
-
     const { ims } = useAdobeRuntimeContext();
-
-    const { response, loading, error, invoke } = useAppBuilderAction<{
-        abilities: Array<{ ability: { name: string } }>;
-    }>({
-        url: sampleActionUrl,
+    const { response, loading, error, invoke } = useAppBuilderAction<Json>({
+        name: 'appbuilder/api-sample',
         method: 'GET',
         ims,
     });

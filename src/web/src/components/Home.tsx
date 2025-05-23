@@ -1,5 +1,5 @@
 import { Heading, Text, View } from '@adobe/react-spectrum';
-import { usePageContext } from '../context/PageContext.tsx';
+import { usePageContext } from '../context/PageContextProvider.tsx';
 
 export const Home = () => {
     const { title } = usePageContext();

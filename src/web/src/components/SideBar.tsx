@@ -9,8 +9,13 @@ function SideBar() {
                 </Link>
             </li>
             <li className="SideNav-item">
-                <Link aria-label="About" href="/about">
-                    About App Builder
+                <Link aria-label="Sample Action" href="/sample-action">
+                    Sample Action
+                </Link>
+            </li>
+            <li className="SideNav-item">
+                <Link aria-label="Documentation" href="/documentation">
+                    Documentation
                 </Link>
             </li>
         </ul>

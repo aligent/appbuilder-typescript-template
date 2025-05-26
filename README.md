@@ -110,8 +110,8 @@ application:
 This setup is brittle and confusing in a few areas. Some of that is because of the aio CLI's opinionated behaviour, some may be because the Typescript and package settings aren't quite right.
 
 - `aio app test` (jest) and `aio app build` (webpack for actions) require a babel setup for typescript support
+- Parcel will detect a standard `babel.config.js` file and warn about it
 - Babel and parcel do not typecheck, so hooks are used to check types before building actions/web folders
-- `aio app run` throws a permission error when checking `src/web` types in a hook
 - AppBuilder doesn't support ESM syntax for `*webpack-config.js`, so the whole package has to be commonjs. For consistency only the standard aligent config files (prettier, eslint) are kept as `.mjs`
 - Jest doesn't understand the transpiled `.js` imports, requiring `moduleNameMapper` configuration in `jest.config.js`
 - `babel-jest` hoists mock declarations to the top of the files which can make it very tricky to mock nested functions from `@adobe/aio-sdk`; the `jest` import is not available at the time mocks are initialised
@@ -120,7 +120,7 @@ This setup is brittle and confusing in a few areas. Some of that is because of t
 
 - [ ] Deployment pipeline
 - [ ] Pre-commit hooks
-- [ ] Front End calling deployed actions
+- [x] Front End calling deployed actions
 - [ ] Front End extension point example
 - [x] Cleaner tsconfig setup separating tests, actions, web code
 - [x] Use Babel instead of ts-loader for action compiling

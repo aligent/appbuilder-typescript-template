@@ -7,3 +7,6 @@ dist
 .env
 .aio
 .aws.tmp*
+
+# misc
+**/coverage

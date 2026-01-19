@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { describe, expect, test, vi } from 'vitest';
 import { RequestParameters } from '../../src/actions/utils/runtime.ts';
 import * as utils from '../../src/actions/utils/utils.ts';
 
@@ -22,7 +22,7 @@ describe('errorResponse', () => {
 
     test('(400, errorMessage, logger)', () => {
         const logger = {
-            info: jest.fn(),
+            info: vi.fn(),
         };
         const res = utils.errorResponse(400, 'errorMessage', logger);
         expect(logger.info).toHaveBeenCalledWith('400: errorMessage');
@@ -199,5 +199,50 @@ describe('getBearerToken', () => {
         expect(
             utils.getBearerToken({ __ow_headers: { authorization: 'Bearer fake Bearer fake' } })
         ).toEqual('fake Bearer fake');
+    });
+});
+
+describe('parseScopes', () => {
+    test('parses legacy quoted format', () => {
+        const input = `"AdobeID","openid","read_organizations"`;
+        expect(utils.parseScopes(input)).toEqual(['AdobeID', 'openid', 'read_organizations']);
+    });
+
+    test('parses JSON array format', () => {
+        const input = `["foo","bar","baz"]`;
+        expect(utils.parseScopes(input)).toEqual(['foo', 'bar', 'baz']);
+    });
+
+    test('trims whitespace in legacy mode', () => {
+        const input = `  "foo" ,   "bar"  `;
+        expect(utils.parseScopes(input)).toEqual(['foo', 'bar']);
+    });
+
+    test('returns empty array for undefined', () => {
+        expect(utils.parseScopes(undefined)).toEqual([]);
+    });
+
+    test('returns empty array for empty string', () => {
+        expect(utils.parseScopes('')).toEqual([]);
+    });
+
+    test('ignores empty segments in legacy mode', () => {
+        const input = `"foo",,"bar",`;
+        expect(utils.parseScopes(input)).toEqual(['foo', 'bar']);
+    });
+
+    test('handles already-unquoted values in legacy mode', () => {
+        const input = `foo,bar,baz`;
+        expect(utils.parseScopes(input)).toEqual(['foo', 'bar', 'baz']);
+    });
+
+    test('handles mixed quoted + unquoted in legacy mode', () => {
+        const input = `"foo", bar, "baz"`;
+        expect(utils.parseScopes(input)).toEqual(['foo', 'bar', 'baz']);
+    });
+
+    test('parse JSON array format of mixed primitives', () => {
+        const input = `[1, "foo"]`;
+        expect(utils.parseScopes(input)).toEqual([1, 'foo']);
     });
 });

@@ -2,8 +2,10 @@
     "extends": "@aligent/ts-code-standards/tsconfigs-react",
     "compilerOptions": {
         "allowImportingTsExtensions": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true
     },
-    "include": ["**/*.tsx", "**/*.ts"],
+    "include": ["**/*.tsx", "**/*.ts", "global-types"],
     "exclude": []
 }

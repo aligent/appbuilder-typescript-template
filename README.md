@@ -118,8 +118,8 @@ This setup is brittle and confusing in a few areas. Some of that is because of t
 
 ## Under development
 
-- [ ] Deployment pipeline
-- [ ] Pre-commit hooks
+- [x] Deployment pipeline
+- [x] Pre-commit hooks
 - [x] Front End calling deployed actions
 - [ ] Front End extension point example
 - [x] Cleaner tsconfig setup separating tests, actions, web code

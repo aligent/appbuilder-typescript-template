@@ -1,7 +1,9 @@
 import { Button, Text, TreeView, TreeViewItem, TreeViewItemContent } from '@adobe/react-spectrum';
-import Brackets from '@spectrum-icons/workflow/Brackets';
-import BracketsSquare from '@spectrum-icons/workflow/BracketsSquare';
-import { useCallback } from 'react';
+import { IconPropsWithoutChildren } from '@react-spectrum/icon';
+import { JSX, useCallback } from 'react';
+
+declare const Brackets: (props: IconPropsWithoutChildren) => JSX.Element;
+declare const BracketsSquare: (props: IconPropsWithoutChildren) => JSX.Element;
 
 export type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
 

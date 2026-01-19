@@ -1,7 +1,7 @@
 import page from '@adobe/exc-app/page';
 import topbar from '@adobe/exc-app/topbar';
 import { createContext, useContext, useEffect } from 'react';
-import { useAdobeRuntimeContext } from './AdobeRuntimeContextProvider.ts';
+import { useAdobeRuntimeContext } from './AdobeRuntimeContextProvider.tsx';
 
 interface PageContextType {
     title: string;

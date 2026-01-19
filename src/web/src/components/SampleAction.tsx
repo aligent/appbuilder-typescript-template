@@ -10,7 +10,7 @@ import {
 } from '@adobe/react-spectrum';
 import { IconPropsWithoutChildren } from '@react-spectrum/icon';
 import { JSX, useState } from 'react';
-import { useAdobeRuntimeContext } from '../context/AdobeRuntimeContextProvider.ts';
+import { useAdobeRuntimeContext } from '../context/AdobeRuntimeContextProvider.tsx';
 import { useAppBuilderAction } from '../hooks/useAppBuilderAction.ts';
 import { JsonTree, type Json } from './JsonTree.tsx';
 

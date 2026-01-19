@@ -1,0 +1,65 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Australia/Adelaide"
+    ignore:
+      - dependency-name: "*"
+    open-pull-requests-limit: 10
+    groups:
+      # Group all Adobe SDK dependencies together
+      adobe-dependencies:
+        patterns:
+          - '@adobe/*'
+      # Group React and related UI dependencies
+      react-dependencies:
+        patterns:
+          - 'react'
+          - 'react-*'
+          - '@types/react*'
+      # Group all TypeScript-related dependencies
+      typescript-dependencies:
+        patterns:
+          - 'typescript'
+          - '@types/*'
+          - 'ts-*'
+      # Group testing dependencies
+      testing-dependencies:
+        patterns:
+          - 'vitest'
+          - '@vitest/*'
+          - 'vite-node'
+          - 'msw'
+          - '@testing-library/*'
+      # Group build and bundling tools
+      build-dependencies:
+        patterns:
+          - 'babel*'
+          - '@babel/*'
+          - 'webpack*'
+          - 'parcel*'
+          - 'ts-loader'
+          - 'concurrently'
+      # Group linting and code quality tools
+      code-quality-dependencies:
+        patterns:
+          - 'eslint*'
+          - '@aligent/ts-code-standards'
+          - 'prettier*'
+      # Group OpenWhisk and runtime dependencies
+      runtime-dependencies:
+        patterns:
+          - '@openwhisk/*'
+          - 'cloudevents'
+    commit-message:
+      prefix: 'chore'
+      prefix-development: 'chore'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'automated'

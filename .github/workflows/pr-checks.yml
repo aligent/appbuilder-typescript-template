@@ -1,0 +1,58 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches:
+      - staging
+      - production
+
+jobs:
+  node-pr-checks:
+    name: Node PR Checks
+    uses: aligent/workflows/.github/workflows/node-pr.yml@main
+    with:
+      package-manager: npm
+      lint-command: lint
+      check-types-command: check-types
+      skip-build: true
+      skip-test: true
+      skip-format: true
+      skip-test-storybook: true
+  test:
+    name: Test PR
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: npm install
+        run: npm i
+      - name: Setup CLI
+        uses: adobe/aio-cli-setup-action@5a7a7313f7024283e7eb384dc79b69b02effb307
+        with:
+          os: ubuntu-24.04
+          version: 11.x.x
+      - name: Auth
+        uses: adobe/aio-apps-action@0a7e7eb813fbdf73faea7ee7d03fd20e6dd7badb
+        with:
+          os: ubuntu-24.04
+          command: oauth_sts
+          CLIENTID: ${{ secrets.CLIENTID }}
+          CLIENTSECRET: ${{ secrets.CLIENTSECRET }}
+          TECHNICALACCOUNTID: ${{ secrets.TECHNICALACCID }}
+          TECHNICALACCOUNTEMAIL: ${{ secrets.TECHNICALACCEMAIL }}
+          IMSORGID: ${{ secrets.IMSORGID }}
+          SCOPES: ${{ secrets.SCOPES }}
+      - name: Build
+        env:
+          AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE }}
+        uses: adobe/aio-apps-action@0a7e7eb813fbdf73faea7ee7d03fd20e6dd7badb
+        with:
+          os: ubuntu-24.04
+          command: build
+      # Run test step using Vitest test runner instead of default 'aio app test'(Jest)
+      - name: Test
+        run: npm test

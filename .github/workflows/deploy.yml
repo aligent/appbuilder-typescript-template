@@ -1,0 +1,63 @@
+name: AIO App CI
+
+on:
+  push:
+    branches:
+      - production
+      - staging
+jobs:
+  deploy:
+    name: Deploy to ${{ github.ref_name }}
+    runs-on: ${{ matrix.os }}
+    environment: ${{ github.ref_name }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-24.04]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: npm install
+        run: npm i
+      - name: Setup CLI
+        uses: adobe/aio-cli-setup-action@5a7a7313f7024283e7eb384dc79b69b02effb307
+        with:
+          os: ${{ matrix.os }}
+          version: 11.x.x
+      - name: Auth
+        uses: adobe/aio-apps-action@0a7e7eb813fbdf73faea7ee7d03fd20e6dd7badb
+        with:
+          os: ${{ matrix.os }}
+          command: oauth_sts
+          CLIENTID: ${{ secrets.CLIENTID }}
+          CLIENTSECRET: ${{ secrets.CLIENTSECRET }}
+          TECHNICALACCOUNTID: ${{ secrets.TECHNICALACCID }}
+          TECHNICALACCOUNTEMAIL: ${{ secrets.TECHNICALACCEMAIL }}
+          IMSORGID: ${{ secrets.IMSORGID }}
+          SCOPES: ${{ secrets.SCOPES }}
+      - name: Build
+        env:
+          AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE }}
+        uses: adobe/aio-apps-action@0a7e7eb813fbdf73faea7ee7d03fd20e6dd7badb
+        with:
+          os: ${{ matrix.os }}
+          command: build
+      - name: Deploy
+        env:
+          AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE }}
+          AIO_RUNTIME_AUTH: ${{ secrets.AIO_RUNTIME_AUTH }}
+          AIO_PROJECT_ID: ${{ secrets.AIO_PROJECT_ID }}
+          AIO_PROJECT_NAME: ${{ secrets.AIO_PROJECT_NAME }}
+          AIO_PROJECT_ORG_ID: ${{ secrets.AIO_PROJECT_ORG_ID }}
+          AIO_PROJECT_WORKSPACE_ID: ${{ secrets.AIO_PROJECT_WORKSPACE_ID_ }}
+          AIO_PROJECT_WORKSPACE_NAME: ${{ secrets.AIO_PROJECT_WORKSPACE_NAME }}
+          AIO_PROJECT_WORKSPACE_DETAILS_SERVICES: ${{ secrets.AIO_PROJECT_WORKSPACE_DETAILS_SERVICES }}
+        uses: adobe/aio-apps-action@0a7e7eb813fbdf73faea7ee7d03fd20e6dd7badb
+        with:
+          os: ${{ matrix.os }}
+          command: deploy
+          noPublish: ${{ secrets.AIO_NO_PUBLISH }}

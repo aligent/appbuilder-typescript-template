@@ -27,12 +27,6 @@ aio console workspace select
 
 Then run `aio app use` to build your `.aio` and `.env` files.
 
-Setup a hostname alias for your local development by running:
-```bash
-manta host add [app_name] [port_number] -k -s
-```
-`port_number` is likely to be 9080, but if that's not the case, run `aio app dev` to see what the port number is. After this step, you'll be able to access your local development app at `https://[app_name].aligent.dev`. You'll also need to add `SERVER_HOST=0.0.0.0` to your `.env` file.
-
 
 Add the `BASE_URL` environment variable required for the api-sample action to your `.env` file
 
@@ -46,9 +40,16 @@ Use the `aio cli` for development commands. A comprehensive list of commands and
 
 ### Serving the app locally
 
+#### Setup
+Setup a hostname alias for your local development by running:
+```bash
+manta host add [app_name] [port_number] -k -s
+```
+`port_number` is likely to be 9080, but if that's not the case, run `aio app dev` to see what the port number is. After this step, you'll be able to access your local development app at `https://[app_name].aligent.dev`. You'll also need to add `SERVER_HOST=0.0.0.0` to your `.env` file.
+
+#### Commands
 - `aio app dev` will serve **both** actions and frontend locally
 - `aio app run` will **deploy** actions to the AppBuilder platform and serve the frontend locally
-- The local server is exposed on `localhost:9080` by default
 
 ### Debugging in VS Code
 

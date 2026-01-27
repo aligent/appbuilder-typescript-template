@@ -8,17 +8,33 @@ Frontend and action code is fully typed, actions are bundled with sourcemaps usi
 ## Prerequisites
 
 - Access to the [Adobe Developer Console](https://developer.adobe.com/developer-console/)
-- Access to an existing AppBuilder project
+- Access to an existing AppBuilder project.
+  - If you're making a new project, follow the steps [here](https://developer.adobe.com/app-builder/docs/get_started/app_builder_get_started/first-app) to create an App project in the Adobe Developer Console.
 - Up-to-date global installation of the [Adobe aio CLI](https://developer.adobe.com/runtime/docs/guides/tools/cli_install/)
 
 ## Set up the repository
 
 ```bash
 npm ci # Install dependencies
-aio app use # Select the desired workspace - this will build your .aio and .env files
 ```
 
-Add the BASE_URL environment variable required for the api-sample action to your `.env` file
+Configure your console by choosing `org`, `project`, and `workspace` to point to your AppBuilder project:
+```bash
+aio console org select
+aio console project select
+aio console workspace select
+```
+
+Then run `aio app use` to build your `.aio` and `.env` files.
+
+Setup a hostname alias for your local development by running:
+```bash
+manta host add [app_name] [port_number] -k -s
+```
+`port_number` is likely to be 9080, but if that's not the case, run `aio app dev` to see what the port number is. After this step, you'll be able to access your local development app at `https://[app_name].aligent.dev`. You'll also need to add `SERVER_HOST=0.0.0.0` to your `.env` file.
+
+
+Add the `BASE_URL` environment variable required for the api-sample action to your `.env` file
 
 ```bash
 BASE_URL=https://pokeapi.co/api/v2/pokemon/

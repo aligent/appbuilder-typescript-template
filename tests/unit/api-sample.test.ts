@@ -2,7 +2,7 @@ import { Core } from '@adobe/aio-sdk';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { afterAll, afterEach, beforeAll, describe, expect, test, vi } from 'vitest';
-import * as action from '../../src/actions/api-sample/index.ts';
+import * as action from '../../src/actions/api-sample/index.js';
 
 // Create mock functions for the logger methods we want to spy on
 const mockInfo = vi.fn();

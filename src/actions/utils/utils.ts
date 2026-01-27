@@ -1,5 +1,5 @@
 import type { Paths, SetRequiredDeep, SimplifyDeep, UnionToIntersection } from 'type-fest';
-import { RequestParameters } from './runtime.ts';
+import { RequestParameters } from './runtime.js';
 
 /**
  *

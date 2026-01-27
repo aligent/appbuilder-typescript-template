@@ -1,6 +1,6 @@
 import { Core, Events } from '@adobe/aio-sdk';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
-import * as action from '../../src/actions/publish-event-sample/index.ts';
+import * as action from '../../src/actions/publish-event-sample/index.js';
 
 // Create mock functions for the logger methods we want to spy on
 const mockInfo = vi.fn();

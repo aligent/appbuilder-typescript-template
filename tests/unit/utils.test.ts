@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
-import { RequestParameters } from '../../src/actions/utils/runtime.ts';
-import * as utils from '../../src/actions/utils/utils.ts';
+import { RequestParameters } from '../../src/actions/utils/runtime.js';
+import * as utils from '../../src/actions/utils/utils.js';
 
 test('interface', () => {
     expect(typeof utils.errorResponse).toBe('function');

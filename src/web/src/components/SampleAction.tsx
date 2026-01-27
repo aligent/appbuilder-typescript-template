@@ -11,7 +11,7 @@ import {
 import { IconPropsWithoutChildren } from '@react-spectrum/icon';
 import { JSX, useState } from 'react';
 import { useAdobeRuntimeContext } from '../context/AdobeRuntimeContextProvider.tsx';
-import { useAppBuilderAction } from '../hooks/useAppBuilderAction.ts';
+import { useAppBuilderAction } from '../hooks/useAppBuilderAction.js';
 import { JsonTree, type Json } from './JsonTree.tsx';
 
 declare const Search: (props: IconPropsWithoutChildren) => JSX.Element;

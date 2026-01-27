@@ -37,7 +37,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "vitest  --passWithNoTests --coverage ./test",
+    "test": "vitest --coverage ./tests",
     "e2e": "vitest --collectCoverage=false --testRegex ./e2e",
     "check-types": "npm run check-types:actions && npm run check-types:web && npm run check-types:tests",
     "check-types:actions": "tsc --noEmit --project src/actions/tsconfig.json",

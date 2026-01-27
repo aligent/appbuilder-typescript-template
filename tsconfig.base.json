@@ -3,7 +3,9 @@
     "compileOnSave": false,
     "compilerOptions": {
         "noEmit": true,
-        "allowImportingTsExtensions": true
+        "allowImportingTsExtensions": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true
     },
     "exclude": ["tests", "**/*.mjs", "**/*.cjs", "node_modules"],
     "include": ["global-types"]

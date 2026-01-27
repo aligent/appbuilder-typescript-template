@@ -1,6 +1,6 @@
-import { describe, expect, jest, test } from '@jest/globals';
-import { RequestParameters } from '../../src/actions/utils/runtime.ts';
-import * as utils from '../../src/actions/utils/utils.ts';
+import { describe, expect, test, vi } from 'vitest';
+import { RequestParameters } from '../../src/actions/utils/runtime.js';
+import * as utils from '../../src/actions/utils/utils.js';
 
 test('interface', () => {
     expect(typeof utils.errorResponse).toBe('function');
@@ -22,7 +22,7 @@ describe('errorResponse', () => {
 
     test('(400, errorMessage, logger)', () => {
         const logger = {
-            info: jest.fn(),
+            info: vi.fn(),
         };
         const res = utils.errorResponse(400, 'errorMessage', logger);
         expect(logger.info).toHaveBeenCalledWith('400: errorMessage');

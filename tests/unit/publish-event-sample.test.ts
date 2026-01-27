@@ -1,15 +1,15 @@
 import { Core, Events } from '@adobe/aio-sdk';
-import { beforeEach, describe, expect, jest, test } from '@jest/globals';
-import * as action from '../../src/actions/publish-event-sample/index.ts';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
+import * as action from '../../src/actions/publish-event-sample/index.js';
 
 // Create mock functions for the logger methods we want to spy on
-const mockInfo = jest.fn();
-const mockDebug = jest.fn();
-const mockError = jest.fn();
-const mockPublish = jest.fn<() => Promise<string | undefined>>();
+const mockInfo = vi.fn();
+const mockDebug = vi.fn();
+const mockError = vi.fn();
+const mockPublish = vi.fn<() => Promise<string | undefined>>();
 
 // Mock the entire @adobe/aio-sdk module
-jest.mock('@adobe/aio-sdk', () => {
+vi.mock('@adobe/aio-sdk', () => {
     return {
         Core: {
             Logger: () => ({
@@ -27,11 +27,11 @@ jest.mock('@adobe/aio-sdk', () => {
     };
 });
 
-const loggerSpy = jest.spyOn(Core, 'Logger');
-const initSpy = jest.spyOn(Events, 'init');
+const loggerSpy = vi.spyOn(Core, 'Logger');
+const initSpy = vi.spyOn(Events, 'init');
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 });
 
 const fakeParams = {

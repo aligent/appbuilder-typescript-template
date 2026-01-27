@@ -1,5 +1,5 @@
 import { Core } from '@adobe/aio-sdk';
-import { expect, test } from '@jest/globals';
+import { expect, test } from 'vitest';
 
 // get action url
 const namespace = Core.Config.get('runtime.namespace');

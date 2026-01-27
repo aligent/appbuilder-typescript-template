@@ -1,15 +1,15 @@
 import { Core } from '@adobe/aio-sdk';
-import { afterAll, afterEach, beforeAll, describe, expect, jest, test } from '@jest/globals';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import * as action from '../../src/actions/api-sample/index.ts';
+import { afterAll, afterEach, beforeAll, describe, expect, test, vi } from 'vitest';
+import * as action from '../../src/actions/api-sample/index.js';
 
 // Create mock functions for the logger methods we want to spy on
-const mockInfo = jest.fn();
-const mockDebug = jest.fn();
-const mockError = jest.fn();
+const mockInfo = vi.fn();
+const mockDebug = vi.fn();
+const mockError = vi.fn();
 // Mock the entire @adobe/aio-sdk module
-jest.mock('@adobe/aio-sdk', () => {
+vi.mock('@adobe/aio-sdk', () => {
     return {
         Core: {
             Logger: () => ({
@@ -22,7 +22,7 @@ jest.mock('@adobe/aio-sdk', () => {
     };
 });
 
-const loggerSpy = jest.spyOn(Core, 'Logger');
+const loggerSpy = vi.spyOn(Core, 'Logger');
 
 // Mock an external API for testing fetch requests
 // IMPORTANT: If a request is made that doesn't have a matching handler,
@@ -42,7 +42,7 @@ beforeAll(() => {
 });
 
 afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     server.resetHandlers();
 });
 

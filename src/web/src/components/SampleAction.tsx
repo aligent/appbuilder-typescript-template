@@ -8,11 +8,14 @@ import {
     View,
     Well,
 } from '@adobe/react-spectrum';
-import Search from '@spectrum-icons/workflow/Search';
-import { useState } from 'react';
-import { useAdobeRuntimeContext } from '../context/AdobeRuntimeContextProvider';
-import { useAppBuilderAction } from '../hooks/useAppBuilderAction';
-import { JsonTree, type Json } from './JsonTree';
+import { IconPropsWithoutChildren } from '@react-spectrum/icon';
+import { JSX, useState } from 'react';
+import { useAdobeRuntimeContext } from '../context/AdobeRuntimeContextProvider.tsx';
+import { useAppBuilderAction } from '../hooks/useAppBuilderAction.js';
+import { JsonTree, type Json } from './JsonTree.tsx';
+
+declare const Search: (props: IconPropsWithoutChildren) => JSX.Element;
+
 export const SampleAction = () => {
     // Set up react hook to invoke our appbuilder action
     const { ims } = useAdobeRuntimeContext();

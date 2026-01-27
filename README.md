@@ -135,7 +135,7 @@ This setup is brittle and confusing in a few areas. Some of that is because of t
 
 ## Under development
 
-- [ ] Deployment pipeline
+- [x] Deployment pipeline
 - [ ] Pre-commit hooks
 - [x] Front End calling deployed actions
 - [ ] Front End extension point example

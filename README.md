@@ -59,6 +59,23 @@ Alternatively, create a new Javascript Debug Terminal and run `aio app dev`/`aio
 
 Breakpoints in typescript code are supported with inline source maps.
 
+### Debugging deployed actions
+
+After your action has been deployed, the logs exists in the server and not in your local, so you'll have to first locate the activation ID of your action:
+
+```bash
+aio rt activation list
+```
+
+then run:
+
+```bash
+aio rt activation logs [activation_id_of_your_action]
+```
+
+to see the error logs.
+
+
 ### Test & Coverage
 
 - Run `aio app test` to run the testing suite

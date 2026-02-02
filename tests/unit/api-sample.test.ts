@@ -2,7 +2,8 @@ import { Core } from '@adobe/aio-sdk';
 import { afterAll, afterEach, beforeAll, describe, expect, jest, test } from '@jest/globals';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import * as action from '../../src/actions/api-sample/index.ts';
+
+import * as action from '@/actions/api-sample/index.ts';
 
 // Create mock functions for the logger methods we want to spy on
 const mockInfo = jest.fn();

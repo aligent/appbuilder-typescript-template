@@ -10,9 +10,11 @@ import {
 } from '@adobe/react-spectrum';
 import Search from '@spectrum-icons/workflow/Search';
 import { useState } from 'react';
-import { useAdobeRuntimeContext } from '../context/AdobeRuntimeContextProvider';
-import { useAppBuilderAction } from '../hooks/useAppBuilderAction';
-import { JsonTree, type Json } from './JsonTree';
+
+import { JsonTree, type Json } from '@/components/JsonTree';
+import { useAdobeRuntimeContext } from '@/context/AdobeRuntimeContextProvider';
+import { useAppBuilderAction } from '@/hooks/useAppBuilderAction';
+
 export const SampleAction = () => {
     // Set up react hook to invoke our appbuilder action
     const { ims } = useAdobeRuntimeContext();

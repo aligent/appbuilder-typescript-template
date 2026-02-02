@@ -11,9 +11,13 @@
 
 import { Core } from '@adobe/aio-sdk';
 
-import { STATUS_CODES } from '../utils/http.ts';
-import { RequestParameters } from '../utils/runtime.ts';
-import { checkMissingRequestInputs, errorResponse, stringParameters } from '../utils/utils.ts';
+import { STATUS_CODES } from '@/actions/utils/http.ts';
+import { RequestParameters } from '@/actions/utils/runtime.ts';
+import {
+    checkMissingRequestInputs,
+    errorResponse,
+    stringParameters,
+} from '@/actions/utils/utils.ts';
 
 type Params = RequestParameters & {
     LOG_LEVEL?: string;

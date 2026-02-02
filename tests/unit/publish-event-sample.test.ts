@@ -1,6 +1,7 @@
 import { Core, Events } from '@adobe/aio-sdk';
 import { beforeEach, describe, expect, jest, test } from '@jest/globals';
-import * as action from '../../src/actions/publish-event-sample/index.ts';
+
+import * as action from '@/actions/publish-event-sample/index.ts';
 
 // Create mock functions for the logger methods we want to spy on
 const mockInfo = jest.fn();

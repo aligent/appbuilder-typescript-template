@@ -26,7 +26,6 @@ export async function main(params: Params) {
     const logger = Core.Logger('main', { level: params.LOG_LEVEL || 'info' });
 
     try {
-        logger.info('Calling the main action');
         logger.debug(stringParameters(params));
 
         // Validate the input parameters, fail without retrying if any are missing

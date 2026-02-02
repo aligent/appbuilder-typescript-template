@@ -12,18 +12,14 @@
 import { Core } from '@adobe/aio-sdk';
 
 import { STATUS_CODES } from '@/actions/utils/http.ts';
-import { RequestParameters } from '@/actions/utils/runtime.ts';
+import { ActionBaseParams } from '@/actions/utils/runtime.ts';
 import {
     checkMissingRequestInputs,
     errorResponse,
     stringParameters,
 } from '@/actions/utils/utils.ts';
 
-type Params = RequestParameters & {
-    LOG_LEVEL?: Core.LogLevel;
-    BASE_URL?: string;
-    name?: string;
-};
+type Params = ActionBaseParams & { BASE_URL?: string; name?: string };
 
 // Runtime actions MUST export an async main function
 export async function main(params: Params) {

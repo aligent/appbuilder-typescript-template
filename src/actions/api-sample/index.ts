@@ -11,22 +11,21 @@
 
 import { Core } from '@adobe/aio-sdk';
 
-import { STATUS_CODES } from '../utils/http.ts';
-import { RequestParameters } from '../utils/runtime.ts';
-import { checkMissingRequestInputs, errorResponse, stringParameters } from '../utils/utils.ts';
+import { STATUS_CODES } from '@/actions/utils/http.ts';
+import { ActionBaseParams } from '@/actions/utils/runtime.ts';
+import {
+    checkMissingRequestInputs,
+    errorResponse,
+    stringParameters,
+} from '@/actions/utils/utils.ts';
 
-type Params = RequestParameters & {
-    LOG_LEVEL?: string;
-    BASE_URL?: string;
-    name?: string;
-};
+type Params = ActionBaseParams & { BASE_URL?: string; name?: string };
 
 // Runtime actions MUST export an async main function
 export async function main(params: Params) {
     const logger = Core.Logger('main', { level: params.LOG_LEVEL || 'info' });
 
     try {
-        logger.info('Calling the main action');
         logger.debug(stringParameters(params));
 
         // Validate the input parameters, fail without retrying if any are missing

@@ -1,6 +1,7 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import { RequestParameters } from '../../src/actions/utils/runtime.ts';
-import * as utils from '../../src/actions/utils/utils.ts';
+
+import { RequestParameters } from '@/actions/utils/runtime.ts';
+import * as utils from '@/actions/utils/utils.ts';
 
 test('interface', () => {
     expect(typeof utils.errorResponse).toBe('function');

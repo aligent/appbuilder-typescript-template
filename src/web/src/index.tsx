@@ -1,6 +1,8 @@
 import { createRoot } from 'react-dom/client';
 import { HashRouter } from 'react-router';
-import App from './components/App.tsx';
+
+import App from '@/components/App.tsx';
+
 import './index.css';
 
 // Render the application. Currently we do not provide

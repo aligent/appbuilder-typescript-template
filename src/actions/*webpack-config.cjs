@@ -2,9 +2,14 @@
 // using the Adobe aio CLI. Adapted from https://github.com/adobe/aio-cli-plugin-app-dev, then switched to babel-loader
 // Appbuilder documentation: https://developer.adobe.com/app-builder/docs/guides/configuration/webpack-configuration/
 
+const path = require('path');
+
 module.exports = {
     devtool: 'inline-source-map',
     resolve: {
+        alias: {
+            '@': path.resolve(__dirname, '..'),
+        },
         extensions: ['.ts'],
         extensionAlias: {
             '.js': ['.ts', '.js'],

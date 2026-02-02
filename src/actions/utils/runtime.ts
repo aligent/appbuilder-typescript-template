@@ -1,3 +1,5 @@
+import { Core } from '@adobe/aio-sdk';
+
 /**
  * Request parameters set by the OpenWhisk framework.
  * https://developer.adobe.com/runtime/docs/guides/reference/environment_variables/
@@ -43,5 +45,9 @@ interface ErrorResponse {
         };
     };
 }
+
+export type ActionBaseParams = RequestParameters & {
+    LOG_LEVEL?: Core.LogLevel;
+};
 
 export type Response<B> = Promise<SuccessResponse<B> | ErrorResponse>;

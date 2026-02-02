@@ -12,17 +12,17 @@
 import { Core, Events } from '@adobe/aio-sdk';
 import { CloudEvent } from 'cloudevents';
 import { v4 as uuid } from 'uuid';
-import { STATUS_CODES, StatusCode } from '../utils/http.ts';
-import { RequestParameters } from '../utils/runtime.ts';
+
+import { STATUS_CODES, StatusCode } from '@/actions/utils/http.ts';
+import { ActionBaseParams } from '@/actions/utils/runtime.ts';
 import {
     checkMissingRequestInputs,
     errorResponse,
     getBearerToken as extractBearerToken,
     stringParameters,
-} from '../utils/utils.ts';
+} from '@/actions/utils/utils.ts';
 
-type Params = RequestParameters & {
-    LOG_LEVEL?: string;
+type Params = ActionBaseParams & {
     apiKey?: string;
     providerId?: string;
     eventCode?: string;
@@ -34,7 +34,6 @@ export async function main(params: Readonly<Params>) {
     const logger = Core.Logger('main', { level: params.LOG_LEVEL || 'info' });
 
     try {
-        logger.info('Calling the main action');
         logger.debug(stringParameters(params));
 
         // Validate the input parameters, fail without retrying if any are missing

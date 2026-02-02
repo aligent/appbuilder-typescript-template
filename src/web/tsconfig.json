@@ -2,7 +2,11 @@
     "extends": "@aligent/ts-code-standards/tsconfigs-react",
     "compilerOptions": {
         "allowImportingTsExtensions": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "baseUrl": "./src",
+        "paths": {
+            "@/*": ["*"]
+        }
     },
     "include": ["**/*.tsx", "**/*.ts"],
     "exclude": []

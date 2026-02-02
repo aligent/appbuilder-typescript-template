@@ -23,7 +23,7 @@ import {
 } from '@/actions/utils/utils.ts';
 
 type Params = RequestParameters & {
-    LOG_LEVEL?: string;
+    LOG_LEVEL?: Core.LogLevel;
     apiKey?: string;
     providerId?: string;
     eventCode?: string;

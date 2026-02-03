@@ -1,4 +1,5 @@
 import { Content, Heading, Link, View } from '@adobe/react-spectrum';
+
 export const Documentation = () => (
     <View width="size-16000">
         <Heading level={1}>Useful documentation for your app</Heading>

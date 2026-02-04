@@ -1,6 +1,6 @@
 import type { Runtime } from '@adobe/exc-app';
 
-import type { Ims } from '@/runtime/RuntimeScript';
+import type { Ims } from '@/web/runtime/RuntimeScript';
 
 /**
  * Mock runtime object provided when running outside

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import ActionRegistry from '@/config.json';
+import ActionRegistry from '@/web/config.json';
 
 export interface UseAppBuilderActionOptions {
     name: keyof typeof ActionRegistry;

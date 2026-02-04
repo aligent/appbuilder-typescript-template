@@ -45,16 +45,15 @@ const fakeParams = {
     providerId: 'fakeProvider',
     eventCode: 'fakeEventCode',
     payload: { hello: 'world' },
-    LOG_LEVEL: 'fakeLevel',
 };
 
 describe('publish-event-sample', () => {
     test('main should be defined', () => {
         expect(action.main).toBeInstanceOf(Function);
     });
-    test('should set logger to use LOG_LEVEL param', async () => {
-        await action.main(fakeParams);
-        expect(loggerSpy).toHaveBeenCalledWith(expect.any(String), { level: 'fakeLevel' });
+    test('should set logger to use LOG_LEVEL param when it is provided', async () => {
+        await action.main({ ...fakeParams, LOG_LEVEL: 'debug' });
+        expect(loggerSpy).toHaveBeenCalledWith(expect.any(String), { level: 'debug' });
     });
     test('events sdk should be initialized with input credentials', async () => {
         await action.main(fakeParams);

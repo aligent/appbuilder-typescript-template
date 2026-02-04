@@ -71,6 +71,9 @@ export type UseAppBuilderActionOptions = ActionPayload & {
  * errors, and response data. It supports Adobe IMS authentication and allows configuration at both initialization and
  * invocation time.
  *
+ * The hook can optionally invoke the action immediately on mount by setting `shouldInvokeOnInitialisation` to `true`.
+ * This is useful for fetching initial data to pre-populate forms or display cached values when the component renders.
+ *
  * @example
  * ```tsx
  * // Basic usage
@@ -100,6 +103,23 @@ export type UseAppBuilderActionOptions = ActionPayload & {
  *     org: imsOrg,
  *   },
  * });
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Invoke immediately on mount to fetch initial data
+ * const { response, loading } = useAppBuilderAction<ConfigData>({
+ *   name: 'getConfig',
+ *   method: 'GET',
+ *   shouldInvokeOnInitialisation: true,
+ * });
+ *
+ * // `loading` starts as `true`, and `response` will be populated once the action completes
+ * if (loading) {
+ *   return <Spinner />;
+ * }
+ *
+ * return <ConfigForm initialValues={response} />;
  * ```
  */
 export function useAppBuilderAction<T = unknown>(options: UseAppBuilderActionOptions) {

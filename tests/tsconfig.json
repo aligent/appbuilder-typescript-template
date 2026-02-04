@@ -1,5 +1,13 @@
 {
     "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+        "baseUrl": "..",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+    },
     "include": ["**/*.test.ts", "../global-types"],
     "exclude": []
 }

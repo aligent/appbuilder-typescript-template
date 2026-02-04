@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import ActionRegistry from '@/config.json';
 
@@ -55,6 +55,13 @@ export type UseAppBuilderActionOptions = ActionPayload & {
          */
         org?: string;
     };
+
+    /**
+     * Setting this to `true` calls the action immediately, on render. A use case for this is querying for a
+     * previously-set value to pre-populate the config forms as the app renders.
+     * @default false
+     */
+    shouldInvokeOnInitialisation?: boolean;
 };
 
 /**
@@ -96,9 +103,13 @@ export type UseAppBuilderActionOptions = ActionPayload & {
  * ```
  */
 export function useAppBuilderAction<T = unknown>(options: UseAppBuilderActionOptions) {
+    const { shouldInvokeOnInitialisation = false } = options;
+
     const [response, setResponse] = useState<T | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(!!shouldInvokeOnInitialisation);
     const [error, setError] = useState<string | null>(null);
+
+    const hasInvokedOnInitialisationRef = useRef<boolean>(false);
 
     /**
      * Invokes the configured App Builder action. Optional {@link ActionPayload} can be passed in to override the
@@ -157,6 +168,17 @@ export function useAppBuilderAction<T = unknown>(options: UseAppBuilderActionOpt
         },
         [options]
     );
+
+    // This `useEffect` triggers `invoke` immediately on render if `shouldInvokeOnInitialisation` is `true`.
+    // A use case for this is querying for a previously-set value to pre-populate the config forms as the app renders.
+    useEffect(() => {
+        if (!shouldInvokeOnInitialisation || hasInvokedOnInitialisationRef.current) {
+            return;
+        }
+
+        invoke();
+        hasInvokedOnInitialisationRef.current = true;
+    }, [invoke, shouldInvokeOnInitialisation]);
 
     return { response, loading, error, invoke };
 }

@@ -29,7 +29,7 @@ export interface ActionPayload {
  * {@link ActionPayload}'s `searchParams`, `body`, and `headers` can be set here as default values, but can also be
  * passed in when calling `invoke()` if we want to override the default values.
  */
-export type UseAppBuilderActionOptions = ActionPayload & {
+export type UseLazyAppBuilderActionOptions = ActionPayload & {
     /**
      * The name of the action to invoke. This must be a key from the action registry in `@/web/config.json`.
      */
@@ -122,7 +122,7 @@ export type UseAppBuilderActionOptions = ActionPayload & {
  * return <ConfigForm initialValues={response} />;
  * ```
  */
-export function useAppBuilderAction<T = unknown>(options: UseAppBuilderActionOptions) {
+export function useLazyAppBuilderAction<T = unknown>(options: UseLazyAppBuilderActionOptions) {
     const { shouldInvokeOnInitialisation = false } = options;
 
     const [response, setResponse] = useState<T | null>(null);

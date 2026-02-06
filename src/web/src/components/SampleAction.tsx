@@ -13,12 +13,12 @@ import { useState } from 'react';
 
 import { JsonTree, type Json } from '@/web/components/JsonTree';
 import { useAdobeRuntimeContext } from '@/web/context/AdobeRuntimeContextProvider';
-import { useAppBuilderAction } from '@/web/hooks/useAppBuilderAction';
+import { useLazyAppBuilderAction } from '@/web/hooks/useLazyAppBuilderAction';
 
 export const SampleAction = () => {
     // Set up react hook to invoke our appbuilder action
     const { ims } = useAdobeRuntimeContext();
-    const { response, loading, error, invoke } = useAppBuilderAction<Json>({
+    const { response, loading, error, invoke } = useLazyAppBuilderAction<Json>({
         name: 'appbuilder/api-sample',
         method: 'GET',
         ims,

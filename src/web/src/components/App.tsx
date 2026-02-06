@@ -1,12 +1,12 @@
 import { defaultTheme, Grid, Provider, View } from '@adobe/react-spectrum';
 import { Route, Routes, useNavigate } from 'react-router';
 
-import { Documentation } from '@/components/Documentation.tsx';
-import { Home } from '@/components/Home.tsx';
-import { SampleAction } from '@/components/SampleAction.tsx';
-import SideBar from '@/components/SideBar.tsx';
-import { AdobeRuntimeContextProvider } from '@/context/AdobeRuntimeContextProvider.tsx';
-import { PageContextProvider } from '@/context/PageContextProvider.tsx';
+import { Documentation } from '@/web/components/Documentation.tsx';
+import { Home } from '@/web/components/Home.tsx';
+import { SampleAction } from '@/web/components/SampleAction.tsx';
+import SideBar from '@/web/components/SideBar.tsx';
+import { AdobeRuntimeContextProvider } from '@/web/context/AdobeRuntimeContextProvider.tsx';
+import { PageContextProvider } from '@/web/context/PageContextProvider.tsx';
 
 function App() {
     const navigate = useNavigate();

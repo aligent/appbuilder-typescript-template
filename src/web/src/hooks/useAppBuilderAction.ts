@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useLazyAppBuilderAction, type UseLazyAppBuilderActionOptions } from '@/hooks';
+import { useLazyAppBuilderAction, type UseLazyAppBuilderActionOptions } from '@/web/hooks';
 
 /**
  * A React hook for invoking App Builder actions with built-in state management. The hook invokes the action

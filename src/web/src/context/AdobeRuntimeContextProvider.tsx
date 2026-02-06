@@ -1,8 +1,8 @@
 import { Runtime } from '@adobe/exc-app';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { RuntimeScript, type Ims } from '@/runtime/RuntimeScript';
-import { mockIms, mockRuntime } from '@/runtime/runtimeMocks';
+import { RuntimeScript, type Ims } from '@/web/runtime/RuntimeScript';
+import { mockIms, mockRuntime } from '@/web/runtime/runtimeMocks';
 
 const AdobeRuntimeContext = createContext<AdobeRuntimeContextType>({
     loading: true,

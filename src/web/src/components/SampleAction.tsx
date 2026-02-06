@@ -13,7 +13,7 @@ import { useState } from 'react';
 
 import { JsonTree, type Json } from '@/components/JsonTree';
 import { useAdobeRuntimeContext } from '@/context/AdobeRuntimeContextProvider';
-import { useLazyAppBuilderAction } from '@/hooks/useLazyAppBuilderAction';
+import { useLazyAppBuilderAction } from '@/hooks';
 
 export const SampleAction = () => {
     // Set up react hook to invoke our appbuilder action

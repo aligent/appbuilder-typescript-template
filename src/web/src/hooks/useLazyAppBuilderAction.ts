@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import ActionRegistry from '@/config.json';
+import ActionRegistry from '@/web/config.json';
 
 /**
  * Payload options that can be passed when invoking an action.

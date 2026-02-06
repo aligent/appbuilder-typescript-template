@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import ActionRegistry from '@/config.json';
 
@@ -55,13 +55,6 @@ export type UseLazyAppBuilderActionOptions = ActionPayload & {
          */
         org?: string;
     };
-
-    /**
-     * Setting this to `true` calls the action immediately, on render. A use case for this is querying for a
-     * previously-set value to pre-populate the config forms as the app renders.
-     * @default false
-     */
-    shouldInvokeOnInitialisation?: boolean;
 };
 
 /**
@@ -71,13 +64,10 @@ export type UseLazyAppBuilderActionOptions = ActionPayload & {
  * errors, and response data. It supports Adobe IMS authentication and allows configuration at both initialization and
  * invocation time.
  *
- * The hook can optionally invoke the action immediately on mount by setting `shouldInvokeOnInitialisation` to `true`.
- * This is useful for fetching initial data to pre-populate forms or display cached values when the component renders.
- *
  * @example
  * ```tsx
  * // Basic usage
- * const { response, loading, error, invoke } = useAppBuilderAction<MyDataType>({
+ * const { response, loading, error, invoke } = useLazyAppBuilderAction<MyDataType>({
  *   name: 'myAction',
  *   method: 'GET',
  * });
@@ -95,7 +85,7 @@ export type UseLazyAppBuilderActionOptions = ActionPayload & {
  * @example
  * ```tsx
  * // With IMS authentication
- * const { invoke } = useAppBuilderAction({
+ * const { invoke } = useLazyAppBuilderAction({
  *   name: 'protectedAction',
  *   method: 'POST',
  *   ims: {
@@ -104,36 +94,15 @@ export type UseLazyAppBuilderActionOptions = ActionPayload & {
  *   },
  * });
  * ```
- *
- * @example
- * ```tsx
- * // Invoke immediately on mount to fetch initial data
- * const { response, loading } = useAppBuilderAction<ConfigData>({
- *   name: 'getConfig',
- *   method: 'GET',
- *   shouldInvokeOnInitialisation: true,
- * });
- *
- * // `loading` starts as `true`, and `response` will be populated once the action completes
- * if (loading) {
- *   return <Spinner />;
- * }
- *
- * return <ConfigForm initialValues={response} />;
- * ```
  */
 export function useLazyAppBuilderAction<T = unknown>(options: UseLazyAppBuilderActionOptions) {
-    const { shouldInvokeOnInitialisation = false } = options;
-
     const [response, setResponse] = useState<T | null>(null);
-    const [loading, setLoading] = useState<boolean>(!!shouldInvokeOnInitialisation);
+    const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-
-    const hasInvokedOnInitialisationRef = useRef<boolean>(false);
 
     /**
      * Invokes the configured App Builder action. Optional {@link ActionPayload} can be passed in to override the
-     * default values that were set when initialising the `useAppBuilderAction` hook.
+     * default values that were set when initialising the `useLazyAppBuilderAction` hook.
      */
     const invoke = useCallback(
         async (invokeOptions?: ActionPayload) => {
@@ -188,17 +157,6 @@ export function useLazyAppBuilderAction<T = unknown>(options: UseLazyAppBuilderA
         },
         [options]
     );
-
-    // This `useEffect` triggers `invoke` immediately on render if `shouldInvokeOnInitialisation` is `true`.
-    // A use case for this is querying for a previously-set value to pre-populate the config forms as the app renders.
-    useEffect(() => {
-        if (!shouldInvokeOnInitialisation || hasInvokedOnInitialisationRef.current) {
-            return;
-        }
-
-        invoke();
-        hasInvokedOnInitialisationRef.current = true;
-    }, [invoke, shouldInvokeOnInitialisation]);
 
     return { response, loading, error, invoke };
 }

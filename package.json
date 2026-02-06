@@ -6,7 +6,7 @@
   "dependencies": {
     "@adobe/aio-sdk": "^6.0.0",
     "@adobe/exc-app": "^1.4.13",
-    "@adobe/react-spectrum": "^3.41.0",
+    "@adobe/react-spectrum": "^3.46.1",
     "cloudevents": "^9.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

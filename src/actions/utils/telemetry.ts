@@ -30,11 +30,14 @@ const httpMetrics = defineMetrics(meter => ({
 
 // ── Internal helpers ─────────────────────────────────────────────────
 
+// OpenWhisk injects this into the runtime container environment.
+const owActionName = process.env.__OW_ACTION_NAME || 'unknown';
+
 function getHttpContext(params: InstrumentedActionParams) {
     return {
         method: ((params.__ow_method as string) || 'GET').toUpperCase(),
         path: (params.__ow_path as string) || '/',
-        route: `/${process.env.__OW_ACTION_NAME || 'unknown'}`,
+        route: `/${owActionName}`,
     };
 }
 

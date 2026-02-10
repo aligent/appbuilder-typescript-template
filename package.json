@@ -4,6 +4,7 @@
   "private": true,
   "type": "commonjs",
   "dependencies": {
+    "@adobe/aio-lib-telemetry": "^1.1.3",
     "@adobe/aio-sdk": "^6.0.0",
     "@adobe/exc-app": "^1.4.13",
     "@adobe/react-spectrum": "^3.46.1",

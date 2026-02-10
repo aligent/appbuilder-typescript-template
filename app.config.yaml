@@ -28,3 +28,14 @@ application:
             annotations:
               require-adobe-auth: true
               final: true
+          telemetry-example:
+            function: src/actions/telemetry-example/index.ts
+            web: 'yes'
+            runtime: nodejs:22
+            inputs:
+              LOG_LEVEL: debug
+              ENABLE_TELEMETRY: true
+              NEW_RELIC_LICENSE_KEY: $NEW_RELIC_LICENSE_KEY
+            annotations:
+              require-adobe-auth: false
+              final: true

@@ -86,6 +86,150 @@ to see the error logs.
 - `aio app deploy` to build and deploy all actions on Runtime and static files to CDN
 - `aio app undeploy` to undeploy the app
 
+## Telemetry (OpenTelemetry)
+
+This project includes OpenTelemetry instrumentation via [`@adobe/aio-lib-telemetry`](https://github.com/adobe/aio-lib-telemetry), with traces, metrics, and logs exported to New Relic.
+
+See [`src/actions/telemetry-example/index.ts`](src/actions/telemetry-example/index.ts) for a working example that demonstrates all of the features below.
+
+### Setup
+
+1. Obtain an **Ingest - License** key from [New Relic API Keys](https://one.newrelic.com/launcher/api-keys-ui.api-keys-launcher).
+
+2. Add it to your `.env` file:
+
+    ```bash
+    NEW_RELIC_LICENSE_KEY=your_license_key_here
+    ```
+
+3. Pass it as an input to each instrumented action in `app.config.yaml`:
+
+    ```yaml
+    my-action:
+      function: src/actions/my-action/index.ts
+      web: 'yes'
+      runtime: nodejs:22
+      inputs:
+        LOG_LEVEL: debug
+        ENABLE_TELEMETRY: true
+        NEW_RELIC_LICENSE_KEY: $NEW_RELIC_LICENSE_KEY
+    ```
+
+    `ENABLE_TELEMETRY: true` is required -- without it the library will not emit any signals.
+
+4. The telemetry SDK configuration (exporters, service name, etc.) lives in [`src/actions/telemetry-config.ts`](src/actions/telemetry-config.ts).
+
+> [!NOTE]
+> The New Relic OTLP endpoint in `telemetry-config.ts` is set to `otlp.nr-data.net` (US region). For EU accounts, change it to `otlp.eu01.nr-data.net`.
+
+### Instrumenting actions
+
+There are two wrappers depending on the type of action:
+
+#### Web actions (`web: 'yes'`)
+
+Use `instrumentWebAction` from `@/actions/utils/telemetry.ts`. This wraps `instrumentEntrypoint` and automatically adds HTTP server semantic conventions (span kind, request/response attributes, `http.server.request.duration` metric) required for New Relic APM dashboards.
+
+```ts
+import { getInstrumentationHelpers } from '@adobe/aio-lib-telemetry';
+
+import { telemetryConfig } from '@/actions/telemetry-config.ts';
+import { InstrumentedActionParams } from '@/actions/utils/runtime.ts';
+import { instrumentWebAction } from '@/actions/utils/telemetry.ts';
+
+function main(params: InstrumentedActionParams) {
+    const { logger, currentSpan } = getInstrumentationHelpers();
+
+    logger.info('Hello from my action');
+    currentSpan.setAttribute('my.attribute', 'value');
+
+    return { statusCode: 200, body: { message: 'ok' } };
+}
+
+const instrumentedMain = instrumentWebAction(main, telemetryConfig);
+export { instrumentedMain as main };
+```
+
+#### Non-web actions (`web: 'no'`)
+
+Use `instrumentEntrypoint` directly from the telemetry library:
+
+```ts
+import { instrumentEntrypoint, getInstrumentationHelpers } from '@adobe/aio-lib-telemetry';
+
+import { telemetryConfig } from '@/actions/telemetry-config.ts';
+import { InstrumentedActionParams } from '@/actions/utils/runtime.ts';
+
+function main(params: InstrumentedActionParams) {
+    const { logger } = getInstrumentationHelpers();
+    logger.info('Processing event');
+
+    return { statusCode: 200, body: { success: true } };
+}
+
+const instrumentedMain = instrumentEntrypoint(main, telemetryConfig);
+export { instrumentedMain as main };
+```
+
+> [!IMPORTANT]
+> Instrumented actions must use `InstrumentedActionParams` (an alias for `Record<string, unknown>`) instead of `ActionBaseParams`. This is a requirement of the `instrumentEntrypoint` function signature. Use type assertions to access specific params inside the function body.
+
+### Instrumenting functions
+
+Wrap any named function with `instrument()` to create a child span in the trace:
+
+```ts
+import { instrument, getInstrumentationHelpers } from '@adobe/aio-lib-telemetry';
+
+function fetchProducts(categoryId: number) {
+    const { logger, currentSpan } = getInstrumentationHelpers();
+    currentSpan.setAttribute('category.id', categoryId);
+    // ...
+}
+
+const instrumentedFetchProducts = instrument(fetchProducts);
+```
+
+Functions must be **named** -- anonymous or arrow functions will throw at runtime unless you provide a `spanConfig.spanName`.
+
+### Custom metrics
+
+Use `defineMetrics` to create metrics. Counters, histograms, gauges, and observable variants are available:
+
+```ts
+import { defineMetrics } from '@adobe/aio-lib-telemetry';
+
+const metrics = defineMetrics(meter => ({
+    ordersProcessed: meter.createCounter('orders.processed'),
+    processingDuration: meter.createHistogram('orders.processing_duration_ms', {
+        unit: 'ms',
+    }),
+}));
+
+// In your action:
+metrics.ordersProcessed.add(1);
+metrics.processingDuration.record(durationMs);
+```
+
+### Distributed tracing
+
+Serialize the current trace context to pass to downstream services:
+
+```ts
+import { serializeContextIntoCarrier } from '@adobe/aio-lib-telemetry';
+
+const carrier = serializeContextIntoCarrier();
+// Pass carrier as __telemetryContext to the downstream action
+```
+
+The library automatically deserializes context from `params.__telemetryContext` in the receiving action.
+
+### Further reading
+
+- [`@adobe/aio-lib-telemetry` usage guide](https://github.com/adobe/aio-lib-telemetry/blob/main/docs/usage.md)
+- [`@adobe/aio-lib-telemetry` New Relic guide](https://github.com/adobe/aio-lib-telemetry/blob/main/docs/use-cases/new-relic.md)
+- [OpenTelemetry HTTP semantic conventions](https://opentelemetry.io/docs/specs/semconv/http/)
+
 ## Config
 
 ### `app.config.yaml`
@@ -120,7 +264,9 @@ application:
 # AIO_RUNTIME_AUTH=
 # AIO_RUNTIME_NAMESPACE=
 
-# BASE_URL
+# BASE_URL=
+
+# NEW_RELIC_LICENSE_KEY=
 ```
 
 ### `.aio`

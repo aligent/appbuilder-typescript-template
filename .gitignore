@@ -1,3 +1,6 @@
+# OS
+.DS_Store
+
 # NodeJS packages
 node_modules
 
@@ -7,3 +10,15 @@ dist
 .env
 .aio
 .aws.tmp*
+install.yaml
+
+# Generated extension scaffolding
+src/commerce-configuration-1/
+src/commerce-extensibility-1/
+src/commerce-backend-ui-1/web-src/src/config.json
+
+# AI Context Files
+GEMINI.md
+CLAUDE.md
+.claude
+.mcp.json

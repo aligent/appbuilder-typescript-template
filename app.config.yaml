@@ -1,41 +1,6 @@
 application:
   hooks:
-    pre-app-build: ./hooks/check-action-types.sh && ./hooks/check-web-types.sh
+    pre-app-build: ./hooks/check-action-types.sh
   actions: src/actions
-  web: src/web
   runtimeManifest:
-    packages:
-      appbuilder:
-        license: Apache-2.0
-        actions:
-          api-sample:
-            function: src/actions/api-sample/index.ts
-            web: 'yes'
-            runtime: nodejs:22
-            inputs:
-              LOG_LEVEL: debug
-              BASE_URL: $BASE_URL
-            annotations:
-              require-adobe-auth: true
-              final: true
-          publish-event-sample:
-            function: src/actions/publish-event-sample/index.ts
-            web: 'yes'
-            runtime: nodejs:22
-            inputs:
-              LOG_LEVEL: debug
-              apiKey: $SERVICE_API_KEY
-            annotations:
-              require-adobe-auth: true
-              final: true
-          telemetry-example:
-            function: src/actions/telemetry-example/index.ts
-            web: 'yes'
-            runtime: nodejs:22
-            inputs:
-              LOG_LEVEL: debug
-              ENABLE_TELEMETRY: true
-              NEW_RELIC_LICENSE_KEY: $NEW_RELIC_LICENSE_KEY
-            annotations:
-              require-adobe-auth: false
-              final: true
+    packages: {}

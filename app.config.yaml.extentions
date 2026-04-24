@@ -1,0 +1,12 @@
+extensions:
+  commerce/backend-ui/1:
+    $include: src/commerce-backend-ui-1/ext.config.yaml
+
+#   # This extension is required for business configuration. Do not remove.
+#   commerce/configuration/1:
+#     $include: src/commerce-configuration-1/ext.config.yaml
+
+#   # This extension is required for app management. Do not remove.
+#   commerce/extensibility/1:
+#     $include: src/commerce-extensibility-1/ext.config.yaml
+

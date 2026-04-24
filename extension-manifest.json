@@ -1,0 +1,9 @@
+
+{
+  "id": "aligentApp",
+  "name": "aligentApp",
+  "displayName": "Aligent App",
+  "description": "Adobe Commerce App Builder extension",
+  "platform": "web",
+  "version": "1.0.0"
+}

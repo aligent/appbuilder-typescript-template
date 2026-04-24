@@ -1,0 +1,43 @@
+{
+    "name": "<<app-name>>",
+    "$schema": "../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "<<app-name>>/src",
+    "targets": {
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npm run lint",
+                "cwd": "<<app-name>>"
+            }
+        },
+        "lint:fix": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npm run lint:fix",
+                "cwd": "<<app-name>>"
+            }
+        },
+        "check-types": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npm run check-types",
+                "cwd": "<<app-name>>"
+            }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npm test",
+                "cwd": "<<app-name>>"
+            }
+        },
+        "deploy": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "aio app deploy",
+                "cwd": "<<app-name>>"
+            }
+        }
+    }
+}

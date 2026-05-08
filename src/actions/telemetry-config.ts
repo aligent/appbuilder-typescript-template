@@ -41,7 +41,7 @@ function newRelicConfig(params: Record<string, unknown>) {
 const telemetryConfig = defineTelemetryConfig((params, isDev) => {
     return {
         sdkConfig: {
-            serviceName: 'test-telemetry',
+            serviceName: (params.TELEMETRY_SERVICE_NAME as string) || 'my-app',
             instrumentations: getPresetInstrumentations('simple'),
             resource: getAioRuntimeResourceWithAttributes({
                 'service.version': '0.0.1',

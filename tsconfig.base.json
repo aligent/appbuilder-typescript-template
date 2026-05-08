@@ -4,6 +4,8 @@
     "compilerOptions": {
         "noEmit": true,
         "allowImportingTsExtensions": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
         "baseUrl": "./src",
         "paths": {
             "@/*": ["*"]

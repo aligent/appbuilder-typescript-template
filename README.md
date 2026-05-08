@@ -1,18 +1,18 @@
 # Aligent Typescript Template for Adobe AppBuilder
 
-This repository contains a ready-to-build application including two actions and a simple frontend.
-Frontend and action code is fully typed, actions are bundled with sourcemaps using `ts-loader` for step-through debugging.
+This repository contains a ready-to-build application template for Adobe App Builder.
+Action code is fully typed, bundled with sourcemaps using Babel for step-through debugging.
 
-# Setup
+## Setup
 
-## Prerequisites
+### Prerequisites
 
 - Access to the [Adobe Developer Console](https://developer.adobe.com/developer-console/)
 - Access to an existing AppBuilder project.
   - If you're making a new project, follow the steps [here](https://developer.adobe.com/app-builder/docs/get_started/app_builder_get_started/first-app) to create an App project in the Adobe Developer Console.
 - Up-to-date global installation of the [Adobe aio CLI](https://developer.adobe.com/runtime/docs/guides/tools/cli_install/)
 
-## Set up the repository
+### Set up the repository
 
 ```bash
 npm ci # Install dependencies
@@ -27,12 +27,7 @@ aio console workspace select
 
 Then run `aio app use` to build your `.aio` and `.env` files.
 
-
-Add the `BASE_URL` environment variable required for the api-sample action to your `.env` file
-
-```bash
-BASE_URL=https://pokeapi.co/api/v2/pokemon/
-```
+Copy [`.env.sample`](.env.sample) to `.env` and fill in your values.
 
 ## Development
 
@@ -48,8 +43,8 @@ manta host add [app_name] [port_number] -k -s
 `port_number` is likely to be 9080, but if that's not the case, run `aio app dev` to see what the port number is. After this step, you'll be able to access your local development app at `https://[app_name].aligent.dev`. You'll also need to add `SERVER_HOST=0.0.0.0` to your `.env` file.
 
 #### Commands
-- `aio app dev` will serve **both** actions and frontend locally
-- `aio app run` will **deploy** actions to the AppBuilder platform and serve the frontend locally
+- `aio app dev` will serve actions locally
+- `aio app run` will **deploy** actions to the AppBuilder platform
 
 ### Debugging in VS Code
 
@@ -75,7 +70,6 @@ aio rt activation logs [activation_id_of_your_action]
 
 to see the error logs.
 
-
 ### Test & Coverage
 
 - Run `aio app test` to run the testing suite
@@ -86,23 +80,32 @@ to see the error logs.
 - `aio app deploy` to build and deploy all actions on Runtime and static files to CDN
 - `aio app undeploy` to undeploy the app
 
+## Examples
+
+Example actions with full code, config, and tests are available in [`docs/examples/`](docs/examples/):
+
+- [`api-sample`](docs/examples/api-sample/) — Calling an external API
+- [`publish-event-sample`](docs/examples/publish-event-sample/) — Publishing events to Adobe I/O Events
+- [`telemetry-example`](docs/examples/telemetry-example/) — OpenTelemetry instrumentation
+
 ## Telemetry (OpenTelemetry)
 
 This project includes OpenTelemetry instrumentation via [`@adobe/aio-lib-telemetry`](https://github.com/adobe/aio-lib-telemetry), with traces, metrics, and logs exported to New Relic.
 
-See [`src/actions/telemetry-example/index.ts`](src/actions/telemetry-example/index.ts) for a working example that demonstrates all of the features below.
+See [`docs/examples/telemetry-example/`](docs/examples/telemetry-example/) for a working example that demonstrates all of the features below.
 
 ### Setup
 
 1. Obtain an **Ingest - License** key from [New Relic API Keys](https://one.newrelic.com/launcher/api-keys-ui.api-keys-launcher).
 
-2. Add it to your `.env` file:
+2. Add the following to your `.env` file (see [`.env.sample`](.env.sample)):
 
     ```bash
+    TELEMETRY_SERVICE_NAME=my-app
     NEW_RELIC_LICENSE_KEY=your_license_key_here
     ```
 
-3. Pass it as an input to each instrumented action in `app.config.yaml`:
+3. Pass them as inputs to each instrumented action in `app.config.yaml`:
 
     ```yaml
     my-action:
@@ -112,6 +115,7 @@ See [`src/actions/telemetry-example/index.ts`](src/actions/telemetry-example/ind
       inputs:
         LOG_LEVEL: debug
         ENABLE_TELEMETRY: true
+        TELEMETRY_SERVICE_NAME: $TELEMETRY_SERVICE_NAME
         NEW_RELIC_LICENSE_KEY: $NEW_RELIC_LICENSE_KEY
     ```
 
@@ -241,9 +245,8 @@ The library automatically deserializes context from `params.__telemetryContext` 
 ```yaml
 application:
   hooks:
-    pre-app-build: ./hooks/check-action-types.sh && ./hooks/check-web-types.sh
-  actions: actions
-  web: web-src
+    pre-app-build: ./hooks/generate-webpack-configs.sh && ./hooks/check-action-types.sh
+  actions: src/actions
   runtimeManifest:
     packages:
       appbuilder:
@@ -260,14 +263,7 @@ application:
 - Makes secrets and environment variables available at build time
 - Documentation: https://developer.adobe.com/app-builder/docs/guides/configuration/#env
 
-```bash
-# AIO_RUNTIME_AUTH=
-# AIO_RUNTIME_NAMESPACE=
-
-# BASE_URL=
-
-# NEW_RELIC_LICENSE_KEY=
-```
+See [`.env.sample`](.env.sample) for all available variables. Copy it to `.env` and fill in your values.
 
 ### `.aio`
 
@@ -280,27 +276,19 @@ application:
 - Configuration for Developer Console
 - Documentation: https://developer.adobe.com/app-builder/docs/guides/configuration/#aio
 
-### `*webpack-config.js`
+### `*webpack-config.cjs`
 
 - Used by `aio cli` for bundling typescript code
 - Adds inline source maps to support runtime debugging breakpoints in Typescript files
+- A `pre-app-build` hook automatically generates webpack configs for commerce extensions with `.generated` folders
 
 ## General pain points in this repository
 
 This setup is brittle and confusing in a few areas. Some of that is because of the aio CLI's opinionated behaviour, some may be because the Typescript and package settings aren't quite right.
 
 - `aio app test` (jest) and `aio app build` (webpack for actions) require a babel setup for typescript support
-- Parcel will detect a standard `babel.config.js` file and warn about it
-- Babel and parcel do not typecheck, so hooks are used to check types before building actions/web folders
-- AppBuilder doesn't support ESM syntax for `*webpack-config.js`, so the whole package has to be commonjs. For consistency only the standard aligent config files (prettier, eslint) are kept as `.mjs`
-- Jest doesn't understand the transpiled `.js` imports, requiring `moduleNameMapper` configuration in `jest.config.js`
+- Babel does not typecheck, so hooks are used to check types before building
+- AppBuilder doesn't support ESM syntax for `*webpack-config.cjs`, so the whole package has to be commonjs. For consistency only the standard aligent config files (prettier, eslint) are kept as `.mjs`
+- Commerce extensions auto-generate ESM `.js` files in `.generated/` folders that need Babel transpilation — this is handled automatically by the `generate-webpack-configs.sh` hook
+- Jest doesn't understand the transpiled `.js` imports, requiring `moduleNameMapper` configuration in `jest.config.cjs`
 - `babel-jest` hoists mock declarations to the top of the files which can make it very tricky to mock nested functions from `@adobe/aio-sdk`; the `jest` import is not available at the time mocks are initialised
-
-## Under development
-
-- [ ] Deployment pipeline
-- [ ] Pre-commit hooks
-- [x] Front End calling deployed actions
-- [ ] Front End extension point example
-- [x] Cleaner tsconfig setup separating tests, actions, web code
-- [x] Use Babel instead of ts-loader for action compiling

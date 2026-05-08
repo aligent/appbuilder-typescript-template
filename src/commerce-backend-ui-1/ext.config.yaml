@@ -1,0 +1,25 @@
+operations:
+    view:
+        - type: web
+          impl: index.html
+actions: actions
+web: web-src
+hooks:
+    pre-app-build: ./hooks/check-action-types.sh && ./hooks/check-web-types.sh
+runtimeManifest:
+    # database:
+    #     auto-provision: true
+    #     region: aus
+    packages:
+        admin-ui-sdk:
+            license: Apache-2.0
+            actions:
+                registration:
+                    function: actions/registration/index.ts
+                    web: 'yes'
+                    runtime: 'nodejs:22'
+                    inputs:
+                        LOG_LEVEL: debug
+                    annotations:
+                        require-adobe-auth: true
+                        final: true

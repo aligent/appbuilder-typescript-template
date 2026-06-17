@@ -12,7 +12,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.15.1",
-    "uuid": "^8.0.0"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@aligent/ts-code-standards": "^4.2.0",
